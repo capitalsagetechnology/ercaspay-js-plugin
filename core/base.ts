@@ -1,4 +1,5 @@
-import axios, { Axios } from "axios";
+import axios, { Axios, type AxiosResponse } from "axios";
+import type { IBaseResponse } from "./interfaces";
 
 export default abstract class ErcaspayBase {
   protected secretKey: string;
@@ -7,10 +8,7 @@ export default abstract class ErcaspayBase {
 
   protected environment: string = process?.env.NODE_ENV || "development";
 
-  constructor(
-    secretKey: string,
-    environment?: "development" | "production"
-  ) {
+  constructor(secretKey: string, environment?: "development" | "production") {
     if (!secretKey) throw new Error("Secret key is required");
     if (!environment) {
       console.warn("Environment not set, defaulting to development");
@@ -32,5 +30,31 @@ export default abstract class ErcaspayBase {
         Authorization: `Bearer ${this.secretKey}`,
       },
     });
+
+    this.addInterceptors();
+  }
+
+  private addInterceptors() {
+    this.Axios.interceptors.response.use(
+      (response: AxiosResponse<IBaseResponse<any>>) => {
+        if (response.data.requestSuccessful) {
+          return {
+            ...response,
+            data: response.data,
+          };
+        } else {
+          throw new Error(
+            response.data.errorMessage || "An unknown error occurred"
+          );
+        }
+      },
+      (error) => {
+        return Promise.reject(
+          error?.response?.data?.errorMessage ||
+            error.message ||
+            "Network Error"
+        );
+      }
+    );
   }
 }

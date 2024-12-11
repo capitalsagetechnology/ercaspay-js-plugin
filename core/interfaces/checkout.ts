@@ -1,7 +1,7 @@
 export interface IInitiateTransactionRequest {
   amount: number;
   paymentReference: string;
-  paymentMethods?: string;
+  paymentMethods: string;
   customerName: string;
   customerEmail: string;
   customerPhoneNumber?: string;
@@ -13,7 +13,7 @@ export interface IInitiateTransactionRequest {
 }
 
 export interface IInitiateTransactionResponse {
-  transactionId: string;
-  paymentUrl: string;
-  expiry: string;
+  paymentReference: string;
+  transactionReference: string;
+  checkoutUrl: string;
 }
