@@ -9,7 +9,6 @@ export default abstract class ErcaspayBase {
 
   constructor(
     secretKey: string,
-    baseUrl: string,
     environment?: "development" | "production"
   ) {
     if (!secretKey) throw new Error("Secret key is required");
