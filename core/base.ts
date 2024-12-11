@@ -10,9 +10,11 @@ export default abstract class ErcaspayBase {
 
   constructor(secretKey: string, environment?: "development" | "production") {
     if (!secretKey) throw new Error("Secret key is required");
-    if (!environment) {
-      console.warn("Environment not set, defaulting to development");
-    }
+    
+    /**
+     *
+     * Environment not set, defaulting to development
+     */
 
     const SANDBOX_URL = "https://gw.ercaspay.com/api/v1";
     const PRODUCTION_URL = "https://api.ercaspay.com/api/v1";
