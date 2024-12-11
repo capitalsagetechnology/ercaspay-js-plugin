@@ -17,3 +17,28 @@ export interface IInitiateTransactionResponse {
   transactionReference: string;
   checkoutUrl: string;
 }
+
+export interface ICustomer {
+  name: string;
+  email: string;
+  phone_number?: string;
+  reference: string;
+}
+
+export interface IVerifyTransactionResponse {
+  domain: string;
+  status: string;
+  ercs_reference: string;
+  tx_reference: string;
+  amount: number;
+  description: string;
+  paid_at: string;
+  created_at: string;
+  channel: string;
+  currency: string;
+  metadata?: Record<string, any>;
+  fee: number;
+  fee_bearer: string;
+  settled_amount: number;
+  customer: ICustomer;
+}
