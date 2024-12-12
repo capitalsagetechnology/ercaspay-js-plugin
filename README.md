@@ -5,11 +5,18 @@
 
 # Table Of Content
 
+
 - [Table Of Content](#table-of-content)
   - [Introduction 🚀](#introduction-)
-   - [Why Did I Build This? 🤔](#why-did-i-build-this-)
-   - [Ercaspay Js SDK Features 🚀](#ercaspay-js-sdk-features-)
+    - [Why Did I Build This? 🤔](#why-did-i-build-this-)
+    - [Ercaspay Js SDK Features 🚀](#squad-js-sdk-features-)
   - [Installation 💽](#installation-)
+  - [Usage 🚦](#usage-)
+    - [SDK Typed Response](#sdk-typed-response)
+    - [Initiate Payment Method](#initiate-payment-method)
+      - [Parameters](#parameters)
+      - [Example](#example)
+
 
 
 
