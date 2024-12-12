@@ -16,7 +16,7 @@ export interface ICardRequest {
           screenWidth: number;
           timeZone: number;
         };
-        ipAddress: string;
+        ipAddress?: string;
       };
     };
   };
