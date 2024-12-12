@@ -1,4 +1,4 @@
-![](/assets/ercaspay.png)
+<img src="./assets/ercaspay.svg" alt="Ercaspay Logo" width="400" />
 
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
@@ -12,6 +12,7 @@
     - [Ercaspay Js SDK Features 🚀](#ercaspay-js-sdk-features-)
   - [Installation 💽](#installation-)
   - [Usage 🚦](#usage-)
+    - [SDK Typed Response](#sdk-typed-response)
 
 
 ## Introduction 🚀
@@ -98,4 +99,18 @@ const ercaspay = new ErcaspayClient(
   process.env.ERCASPAY_PRIVATE_KEY as string,
   process.env.NODE_ENV as string
 );
+```
+
+### SDK Typed Response
+
+The **SDK** provides **typed responses** for every method call. There is always a base response object for every method call. With this, you can determine the status of each method call, the response type (success or fail)
+and the response message, just like a traditional **API** call. This is useful so that you can catch errors easily and also know the status of each method call so you can tailor your application to respond accordingly.
+
+```typescript
+export interface BaseResponseProps {
+  status: number;
+  success: boolean;
+  message: string;
+  data?: {};
+}
 ```
