@@ -10,7 +10,8 @@
   - [Introduction 🚀](#introduction-)
     - [Why Did We Build This? 🤔](#why-did-we-build-this-)
     - [Ercaspay Js SDK Features 🚀](#ercaspay-js-sdk-features-)
-
+  - [Installation 💽](#installation-)
+  - [Usage 🚦](#usage-)
 
 
 ## Introduction 🚀
@@ -47,16 +48,54 @@ Why should you use the **Ercaspay JS SDK** 🤔 ?
 - **Intuitive Webhook Management:** Manage webhook transactions effortlessly. The SDK introduces clear methods for retrieving and deleting webhook error logs, ensuring a smooth and error-free webhook integration.
 
 These enhancements aim to provide developers with a more powerful, flexible, and enjoyable experience when integrating [Ercaspay Payment APIs](https://ercaspay.com/) into their applications.
-To install dependencies:
+
+## Installation 💽
+
+To install the **SDK** in your application, you can install using `npm, yarn, pnpm or bun`
+
+**Npm**
 
 ```bash
-bun install
+
+npm install @ercaspay/js
+
 ```
 
-To run:
+**Yarn**
 
 ```bash
-bun run index.ts
+yarn add @ercaspay/js
+
 ```
 
-This project was created using `bun init` in bun v1.1.26. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+**Bun**
+
+```bash
+bun add @ercaspay/js
+
+```
+
+
+## Usage 🚦
+
+Though **Ercaspay Js SDK** provides easy methods that can be used even without reading documentation, I will still do my best to explain each **SDK** method. To use the **Ercaspay JS SDK**. You've to import the **ErcaspayClient** from the **@ercaspay/js** package. That class provides the interface to work with the **SDK**.
+
+```typescript
+import ErcaspayClient from "@ercaspay/js";
+```
+
+Then we create a new instance of the **ErcaspayClient** which allows us to interact with the the methods in the **ErcaspayClient**. It takes 3 arguments.
+
+1. The Ercaspay Public Key
+2. The Ercaspay Private Key
+3. The Environment.
+
+The Public and Private Key can be gotten from the **Ercaspay** website. <https://sandbox.ercaspay.com/sign-up> or <https://merchant.ercaspay.com/sign-up>
+
+```typescript
+const ercaspay = new ErcaspayClient(
+  process.env.ERCASPAY_PUBLIC_KEY as string,
+  process.env.ERCASPAY_PRIVATE_KEY as string,
+  process.env.NODE_ENV as string
+);
+```
