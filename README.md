@@ -1,7 +1,7 @@
 ![](/assets/ercaspay.png)
 
 
-**Ercaspay JavaScript SDK**. Built with ❣️ by Team Goodspeed
+**Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
 
 # Table Of Content
 
