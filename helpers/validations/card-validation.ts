@@ -6,15 +6,19 @@ export const cardSchema = Joi.object({
   deviceDetails: Joi.object({
     payerDeviceDto: Joi.object({
       device: Joi.object({
-        browser: Joi.string().required(),
+        browser: Joi.string().optional(),
         browserDetails: Joi.object({
           "3DSecureChallengeWindowSize": Joi.string().required(),
           acceptHeaders: Joi.string().required(),
           colorDepth: Joi.number().required(),
           javaEnabled: Joi.boolean().required(),
-        }),
-      }),
-    }),
-  }),
-  ipAddress: Joi.string().optional(),
+          language: Joi.string().required(),
+          screenHeight: Joi.number().required(),
+          screenWidth: Joi.number().required(),
+          timeZone: Joi.required()
+        }).required(),
+        ipAddress: Joi.string().optional(),
+      }).required(),
+    }).required(),
+  }).required(),
 });

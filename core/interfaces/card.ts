@@ -21,3 +21,13 @@ export interface ICardRequest {
     };
   };
 }
+
+export interface ICardResponse {
+  code: string;
+  status: string;
+  gatewayMessage: string;
+  transactionReference: string;
+  paymentReference: string;
+  amount: number;
+  redirectUrl: string;
+}
