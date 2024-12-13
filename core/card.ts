@@ -5,8 +5,14 @@ import type {
   ICardResponse,
   ISubmitOTPRequest,
   ISubmitOTPResponse,
+  IResendOTPRequest,
+  IResendOTPResponse,
 } from "./interfaces";
-import { cardSchema, submitOTPSchema } from "../helpers/validations";
+import {
+  cardSchema,
+  submitOTPSchema,
+  resendOTPSchema,
+} from "../helpers/validations";
 
 export default class ErcaspayCard extends ErcaspayBase {
   private readonly cardBaseUrl = "/third-party/payment/cards";
@@ -42,4 +48,29 @@ export default class ErcaspayCard extends ErcaspayBase {
 
     return response.data;
   }
+
+  public async resendOTP(data: IResendOTPRequest) {
+      const values = await resendOTPSchema.validateAsync(data);
+
+      if (values.error) {
+        throw new Error(values.error.message);
+      }
+
+      const { transactionReference, ...dataExcludingTransactionReference } =
+        data;
+
+      const response = await this.Axios.post<IBaseResponse<IResendOTPResponse>>(
+        `${this.cardBaseUrl}/otp/resend/${transactionReference}`,
+        dataExcludingTransactionReference
+      );
+
+      return response.data;
+  }
+
+  public async getDetails() {
+    
+  }
+
+  public async verifyTransaction() { }
+  
 }

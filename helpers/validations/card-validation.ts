@@ -15,7 +15,7 @@ export const cardSchema = Joi.object({
           language: Joi.string().required(),
           screenHeight: Joi.number().required(),
           screenWidth: Joi.number().required(),
-          timeZone: Joi.required()
+          timeZone: Joi.required(),
         }).required(),
         ipAddress: Joi.string().optional(),
       }).required(),
@@ -23,10 +23,12 @@ export const cardSchema = Joi.object({
   }).required(),
 });
 
-
-
 export const submitOTPSchema = Joi.object({
   otp: Joi.string().required(),
-  gatewayReference: Joi.string().required(),  
+  gatewayReference: Joi.string().required(),
   transactionReference: Joi.string().required(),
 });
+
+export const resendOTPSchema = submitOTPSchema
+  .fork(["otp"], (schema) => schema.forbidden())
+  .unknown(false);

@@ -53,3 +53,8 @@ export interface ISubmitOTPResponse {
   amount: number;
   callbackUrl: string;
 }
+
+export interface IResendOTPRequest extends Omit<ISubmitOTPRequest, "otp"> {}
+
+
+export interface IResendOTPResponse extends Omit<ISubmitOTPResponse, "amount" | "callbackUrl">{}
