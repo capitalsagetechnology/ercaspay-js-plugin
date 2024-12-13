@@ -3,9 +3,9 @@ import type {
   IBaseResponse,
   IInitiateTransactionRequest,
   IInitiateTransactionResponse,
-  IVerifyTransactionResponse
+  IVerifyTransactionResponse,
 } from "./interfaces";
-import { checkoutSchema } from "../helpers/validations/checkout-validation";
+import { checkoutSchema } from "../helpers/validations";
 
 export default class ErcaspayCheckout extends ErcaspayBase {
   public async initiateTransaction(

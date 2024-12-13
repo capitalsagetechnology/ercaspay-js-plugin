@@ -26,8 +26,16 @@ export interface ICardResponse {
   code: string;
   status: string;
   gatewayMessage: string;
+  supportMessage?: string;
   transactionReference: string;
   paymentReference: string;
   amount: number;
   redirectUrl: string;
+  gatewayReference?: string;
+  eciFlag?: string;
+  transactionAuth?: string;
+  transactionId?: string;
+  transactionRef?: string;
+  transactionAuthLink?: string;
+  
 }
