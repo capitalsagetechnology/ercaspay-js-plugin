@@ -22,3 +22,11 @@ export const cardSchema = Joi.object({
     }).required(),
   }).required(),
 });
+
+
+
+export const submitOTPSchema = Joi.object({
+  otp: Joi.string().required(),
+  gatewayReference: Joi.string().required(),  
+  transactionReference: Joi.string().required(),
+});

@@ -8,6 +8,8 @@ import type {
 import { checkoutSchema } from "../helpers/validations";
 
 export default class ErcaspayCheckout extends ErcaspayBase {
+
+  private readonly checkoutBaseUrl = "/payment";
   public async initiateTransaction(
     data: IInitiateTransactionRequest
   ): Promise<IBaseResponse<IInitiateTransactionResponse>> {
@@ -19,7 +21,7 @@ export default class ErcaspayCheckout extends ErcaspayBase {
 
     const response = await this.Axios.post<
       IBaseResponse<IInitiateTransactionResponse>
-    >("/payment/initiate", data);
+    >(`${this.checkoutBaseUrl}/initiate`, data);
     return response.data;
   }
 
@@ -32,7 +34,7 @@ export default class ErcaspayCheckout extends ErcaspayBase {
 
     const response = await this.Axios.get<
       IBaseResponse<IVerifyTransactionResponse>
-    >(`/payment/transaction/verify/${transactionReference}`);
+    >(`${this.checkoutBaseUrl}/transaction/verify/${transactionReference}`);
 
     return response.data;
   }

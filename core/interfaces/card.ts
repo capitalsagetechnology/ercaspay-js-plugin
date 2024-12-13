@@ -37,5 +37,19 @@ export interface ICardResponse {
   transactionId?: string;
   transactionRef?: string;
   transactionAuthLink?: string;
-  
+}
+
+export interface ISubmitOTPRequest {
+  otp: string;
+  gatewayReference: string;
+  transactionReference: string;
+}
+
+export interface ISubmitOTPResponse {
+  status: string;
+  gatewayMessage: string;
+  transactionReference: string;
+  paymentReference: string;
+  amount: number;
+  callbackUrl: string;
 }
