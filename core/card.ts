@@ -7,7 +7,6 @@ import type {
   ISubmitOTPResponse,
   IResendOTPRequest,
   IResendOTPResponse,
-  IGetCardDetailsRequest,
   IGetCardDetailsResponse,
 } from "./interfaces";
 import {
@@ -81,6 +80,6 @@ export default class ErcaspayCard extends ErcaspayBase {
   }
 
   public async verifyTransaction() {
-    
+
   }
 }
