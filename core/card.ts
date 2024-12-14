@@ -7,6 +7,8 @@ import type {
   ISubmitOTPResponse,
   IResendOTPRequest,
   IResendOTPResponse,
+  IGetCardDetailsRequest,
+  IGetCardDetailsResponse,
 } from "./interfaces";
 import {
   cardSchema,
@@ -50,27 +52,35 @@ export default class ErcaspayCard extends ErcaspayBase {
   }
 
   public async resendOTP(data: IResendOTPRequest) {
-      const values = await resendOTPSchema.validateAsync(data);
+    const values = await resendOTPSchema.validateAsync(data);
 
-      if (values.error) {
-        throw new Error(values.error.message);
-      }
+    if (values.error) {
+      throw new Error(values.error.message);
+    }
 
-      const { transactionReference, ...dataExcludingTransactionReference } =
-        data;
+    const { transactionReference, ...dataExcludingTransactionReference } = data;
 
-      const response = await this.Axios.post<IBaseResponse<IResendOTPResponse>>(
-        `${this.cardBaseUrl}/otp/resend/${transactionReference}`,
-        dataExcludingTransactionReference
-      );
+    const response = await this.Axios.post<IBaseResponse<IResendOTPResponse>>(
+      `${this.cardBaseUrl}/otp/resend/${transactionReference}`,
+      dataExcludingTransactionReference
+    );
 
-      return response.data;
+    return response.data;
   }
 
-  public async getDetails() {
+
+  public async getDetails(transactionReference: string) {
+    if (!transactionReference) { 
+      throw new Error("Transaction reference is required");
+    }
+    const response = await this.Axios.get<
+      IBaseResponse<IGetCardDetailsResponse>
+    >(`${this.cardBaseUrl}/details/${transactionReference}`);
+
+    return response.data;
+  }
+
+  public async verifyTransaction() {
     
   }
-
-  public async verifyTransaction() { }
-  
 }
