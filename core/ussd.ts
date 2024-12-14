@@ -43,11 +43,4 @@ export default class ErcaspayUSSD extends ErcaspayBase {
     return response.data;
   }
 
-  public async getTransactionDetails(transactionReference: string) {
-    const response = await this.Axios.get<
-      IBaseResponse<IGetTransactionDetailsResponse>
-    >(`${this.ussdBaseUrl}/transaction-details/${transactionReference}`);
-
-    return response.data;
-  }
 }
