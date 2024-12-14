@@ -3,6 +3,7 @@ import type {
   IBaseResponse,
   IInitiateCodeRequest,
   IInitiateCodeResponse,
+  IGetTransactionDetailsResponse,
 } from "./interfaces";
 import { initiateCodeSchema } from "./../helpers/validations";
 
@@ -38,6 +39,14 @@ export default class ErcaspayUSSD extends ErcaspayBase {
     const response = await this.Axios.get<IBaseResponse<string[]>>(
       `${this.ussdBaseUrl}/supported-banks`
     );
+
+    return response.data;
+  }
+
+  public async getTransactionDetails(transactionReference: string) {
+    const response = await this.Axios.get<
+      IBaseResponse<IGetTransactionDetailsResponse>
+    >(`${this.ussdBaseUrl}/transaction-details/${transactionReference}`);
 
     return response.data;
   }
