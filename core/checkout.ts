@@ -3,12 +3,11 @@ import type {
   IBaseResponse,
   IInitiateTransactionRequest,
   IInitiateTransactionResponse,
-  IVerifyTransactionResponse,
+  IVerifyCardTransactionResponse,
 } from "./interfaces";
 import { checkoutSchema } from "../helpers/validations";
 
 export default class ErcaspayCheckout extends ErcaspayBase {
-
   private readonly checkoutBaseUrl = "/payment";
   public async initiateTransaction(
     data: IInitiateTransactionRequest
@@ -27,16 +26,15 @@ export default class ErcaspayCheckout extends ErcaspayBase {
 
   public async verifyTransaction(
     transactionReference: string
-  ): Promise<IBaseResponse<IVerifyTransactionResponse>> {
+  ): Promise<IBaseResponse<IVerifyCardTransactionResponse>> {
     if (!transactionReference) {
       throw new Error("Transaction reference is required");
     }
 
     const response = await this.Axios.get<
-      IBaseResponse<IVerifyTransactionResponse>
+      IBaseResponse<IVerifyCardTransactionResponse>
     >(`${this.checkoutBaseUrl}/transaction/verify/${transactionReference}`);
 
     return response.data;
   }
 }
-

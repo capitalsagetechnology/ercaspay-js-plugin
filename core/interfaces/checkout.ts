@@ -25,7 +25,7 @@ export interface ICustomer {
   reference: string;
 }
 
-export interface IVerifyTransactionResponse {
+export interface IVerifyCheckoutTransactionResponse {
   domain: string;
   status: string;
   ercs_reference: string;

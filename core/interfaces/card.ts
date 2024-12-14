@@ -56,15 +56,12 @@ export interface ISubmitOTPResponse {
 
 export interface IResendOTPRequest extends Omit<ISubmitOTPRequest, "otp"> {}
 
-
-export interface IResendOTPResponse extends Omit<ISubmitOTPResponse, "amount" | "callbackUrl">{}
+export interface IResendOTPResponse
+  extends Omit<ISubmitOTPResponse, "amount" | "callbackUrl"> {}
 
 export interface IGetCardDetailsResponse {
   amount: number;
   reference: string;
 }
 
-
-export interface IVerifyTransactionResponse{
-  
-}
+export interface IVerifyCardTransactionResponse {}

@@ -10,3 +10,8 @@ client.card.verifyTransaction("tREf").then((res) => {
 client.checkout.verifyTransaction("tREf").then((res) => { 
     console.log(res.responseBody);
 });
+
+
+// client.bankTransfer.initializeTransfer("tREf").then((res) => {
+//     console.log(res.responseBody.)
+// })
