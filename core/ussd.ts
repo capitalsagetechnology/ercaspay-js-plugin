@@ -1,8 +1,9 @@
 import ErcaspayBase from "./base";
 import type {
   IBaseResponse,
+  ICancelTransactionResponse,
   IInitiateCodeRequest,
-  IInitiateCodeResponse
+  IInitiateCodeResponse,
 } from "./interfaces";
 import { initiateCodeSchema } from "./../helpers/validations";
 
@@ -30,9 +31,8 @@ export default class ErcaspayUSSD extends ErcaspayBase {
       modifiedDataToSend
     );
 
-      return response.data;
+    return response.data;
   }
-
 
   public async getBankList() {
     const response = await this.Axios.get<IBaseResponse<string[]>>(
@@ -42,4 +42,15 @@ export default class ErcaspayUSSD extends ErcaspayBase {
     return response.data;
   }
 
+  public async cancel(transactionReference: string) {
+    if (!transactionReference) {
+      throw new Error("Transaction reference is required");
+    }
+
+    const response = await this.Axios.get<
+      IBaseResponse<ICancelTransactionResponse>
+    >(`${this.ussdBaseUrl}/cancel/${transactionReference}`);
+
+    return response.data;
+  }
 }

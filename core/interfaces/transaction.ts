@@ -34,3 +34,7 @@ export interface IGetTransactionStatusResponse {
   description: string;
   callbackUrl: string;
 }
+
+export interface ICancelTransactionResponse {
+  callback_url: string;
+}
