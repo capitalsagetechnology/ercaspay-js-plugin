@@ -2,8 +2,7 @@ import ErcaspayBase from "./base";
 import type {
   IBaseResponse,
   IInitiateCodeRequest,
-  IInitiateCodeResponse,
-  IGetTransactionDetailsResponse,
+  IInitiateCodeResponse
 } from "./interfaces";
 import { initiateCodeSchema } from "./../helpers/validations";
 
