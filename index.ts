@@ -13,5 +13,5 @@ client.checkout.verifyTransaction("tREf").then((res) => {
 
 
 // client.bankTransfer.initializeTransfer("tREf").then((res) => {
-//     console.log(res.responseBody.)
+//     console.log(res.responseBody)
 // })
