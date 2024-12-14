@@ -85,10 +85,12 @@ export default class ErcaspayCard extends ErcaspayBase {
       throw new Error("Reference is required");
     }
     const response = await this.Axios.get<
-      IBaseResponse<IVerifyTransactionResponse>
+      IBaseResponse<unknown>
     >(`${this.cardBaseUrl}/verify/${reference}`);
 
     return response.data;
 
   }
+
+
 }

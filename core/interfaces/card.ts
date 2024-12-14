@@ -65,4 +65,6 @@ export interface IGetCardDetailsResponse {
 }
 
 
-export interface IVerifyTransactionResponse{}
+export interface IVerifyTransactionResponse{
+  
+}
