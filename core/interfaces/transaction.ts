@@ -1,4 +1,17 @@
-import type { IVerifyCheckoutTransactionResponse } from "./checkout";
+import type {
+  IInitiateCheckoutTransactionRequest,
+  IVerifyCheckoutTransactionResponse,
+} from "./checkout";
+
+export interface IWhiteLabel {
+  id: number;
+  logo_url: string;
+  primary_color: string;
+  accent_color: string;
+  font_family: string;
+  font_color: string;
+  has_admin_approved: string;
+}
 
 export interface IGetTransactionDetailsResponse {
   customerName: string;
@@ -6,15 +19,7 @@ export interface IGetTransactionDetailsResponse {
   amount: number;
   businessName: string;
   businessLogo: string;
-  whiteLabel: {
-    id: number;
-    logo_url: string;
-    primary_color: string;
-    accent_color: string;
-    font_family: string;
-    font_color: string;
-    has_admin_approved: string;
-  };
+  whiteLabel: IWhiteLabel;
   paymentMethods: string[];
 }
 
@@ -37,4 +42,14 @@ export interface IGetTransactionStatusResponse {
 
 export interface ICancelTransactionResponse {
   callback_url: string;
+}
+
+export interface IInitiateTransactionRequest
+  extends IInitiateCheckoutTransactionRequest {}
+
+export interface IInitiateTransactionResponse {
+  paymentReference: string;
+  transactionReference: string;
+  checkoutUrl: string;
+  whiteLabel: IWhiteLabel;
 }

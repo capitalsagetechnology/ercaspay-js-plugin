@@ -1,4 +1,4 @@
-export interface IInitiateTransactionRequest {
+export interface IInitiateCheckoutTransactionRequest {
   amount: number;
   paymentReference: string;
   paymentMethods: string;
@@ -12,7 +12,7 @@ export interface IInitiateTransactionRequest {
   metadata?: Record<string, any>;
 }
 
-export interface IInitiateTransactionResponse {
+export interface IInitiateCheckoutTransactionResponse {
   paymentReference: string;
   transactionReference: string;
   checkoutUrl: string;

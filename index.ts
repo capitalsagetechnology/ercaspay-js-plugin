@@ -25,3 +25,13 @@ const client = new ErcaspayClient(process.env.SECRET_KEY as string);
 client.transaction.getStatus({} as any).then((res) => {
     console.log(res.responseBody);
 });
+
+
+client.transaction.cancel("transactionReference").then((res) => { 
+    console.log(res.responseBody);
+});
+
+
+client.transaction.initiate({} as any).then((res) => {
+   console.log(res.responseBody) 
+});

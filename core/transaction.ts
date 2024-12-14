@@ -5,8 +5,15 @@ import type {
   IVerifyTransactionResponse,
   IGetTransactionStatusRequest,
   IGetTransactionStatusResponse,
+  ICancelTransactionResponse,
+  IInitiateTransactionRequest,
+  IInitiateCheckoutTransactionResponse,
+  IInitiateTransactionResponse,
 } from "./interfaces";
-import { getTransactionDetailsSchema } from "./../helpers/validations";
+import {
+  getTransactionDetailsSchema,
+  initiateTransactionSchema,
+} from "./../helpers/validations";
 
 export default class ErcaspayTransaction extends ErcaspayBase {
   private readonly transactionBaseUrl = "/third-party/payment";
@@ -55,6 +62,30 @@ export default class ErcaspayTransaction extends ErcaspayBase {
       `${this.transactionBaseUrl}/status/${transactionReference}`,
       modifiedDataToSend
     );
+
+    return response.data;
+  }
+
+  public async cancel(transactionReference: string) {
+    if (!transactionReference) {
+      throw new Error("Transaction reference is required");
+    }
+    const response = await this.Axios.get<
+      IBaseResponse<ICancelTransactionResponse>
+    >(`${this.transactionBaseUrl}/cancel/${transactionReference}`);
+    return response.data;
+  }
+
+  public async initiate(data: IInitiateTransactionRequest) {
+    const values = await initiateTransactionSchema.validateAsync(data);
+
+    if (values.error) {
+      throw new Error(values.error.message);
+    }
+
+    const response = await this.Axios.post<
+      IBaseResponse<IInitiateTransactionResponse>
+    >(`${this.transactionBaseUrl}/initiate`, data);
 
     return response.data;
   }
