@@ -15,3 +15,4 @@ export interface IGetTransactionDetailsResponse {
   };
   paymentMethods: string[];
 }
+
