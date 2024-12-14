@@ -15,3 +15,12 @@ client.checkout.verifyTransaction("tREf").then((res) => {
 // client.bankTransfer.initializeTransfer("tREf").then((res) => {
 //     console.log(res.responseBody)
 // })
+
+
+// client.ussd.initiateCode({
+//     transactionReference: "tREf",
+//     amount: 1000,
+//     bankName: "GTB"
+// }).then((res) => {
+//     console.log(res.responseBody.ussdCode)
+// })
