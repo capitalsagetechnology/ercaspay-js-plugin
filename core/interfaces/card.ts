@@ -63,3 +63,6 @@ export interface IGetCardDetailsResponse {
   amount: number;
   reference: string;
 }
+
+
+export interface IVerifyTransactionResponse{}

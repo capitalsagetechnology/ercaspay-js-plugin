@@ -8,6 +8,7 @@ import type {
   IResendOTPRequest,
   IResendOTPResponse,
   IGetCardDetailsResponse,
+  IVerifyTransactionResponse,
 } from "./interfaces";
 import {
   cardSchema,
@@ -79,7 +80,15 @@ export default class ErcaspayCard extends ErcaspayBase {
     return response.data;
   }
 
-  public async verifyTransaction() {
+  public async verifyTransaction(reference: string) {
+    if (!reference) {
+      throw new Error("Reference is required");
+    }
+    const response = await this.Axios.get<
+      IBaseResponse<IVerifyTransactionResponse>
+    >(`${this.cardBaseUrl}/verify/${reference}`);
+
+    return response.data;
 
   }
 }
