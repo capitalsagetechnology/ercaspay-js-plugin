@@ -1,3 +1,5 @@
+import type { IVerifyCheckoutTransactionResponse } from "./checkout";
+
 export interface IGetTransactionDetailsResponse {
   customerName: string;
   customerEmail: string;
@@ -16,3 +18,19 @@ export interface IGetTransactionDetailsResponse {
   paymentMethods: string[];
 }
 
+export interface IVerifyTransactionResponse
+  extends IVerifyCheckoutTransactionResponse {}
+
+export interface IGetTransactionStatusRequest {
+  paymentMethod: string;
+  reference: string;
+  transactionReference: string;
+}
+
+export interface IGetTransactionStatusResponse {
+  paymentReference: string;
+  amount: number;
+  status: string;
+  description: string;
+  callbackUrl: string;
+}
