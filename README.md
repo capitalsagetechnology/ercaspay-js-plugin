@@ -1,4 +1,4 @@
-<img src="./assets/ercaspay.svg" alt="Ercaspay Logo" width="400" />
+<img src="./assets/ercaspay.png" alt="Ercaspay Logo" width="200" />
 
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
