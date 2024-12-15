@@ -2,7 +2,7 @@ import ErcaspayBase from "./base";
 import type { IBaseResponse, IIntitializeTransferResponse } from "./interfaces";
 
 export default class ErcaspayBankTransfer extends ErcaspayBase {
-  private readonly bankTransferBaseUrl = "/third-party/payment/bank-transfer";
+  private readonly bankTransferBaseUrl = "/payment/bank-transfer";
 
   public async initializeTransfer(transactionReference: string) {
     if (!transactionReference) {
