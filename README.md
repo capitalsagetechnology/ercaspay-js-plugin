@@ -13,6 +13,7 @@
   - [Installation 💽](#installation-)
   - [Usage 🚦](#usage-)
     - [SDK Typed Response](#sdk-typed-response)
+    - [Initiate Transfer Method](#initiate-transfer-method)
 
 
 ## Introduction 🚀
@@ -114,3 +115,59 @@ export interface BaseResponseProps {
   data?: {};
 }
 ```
+
+
+So from every method call, I can determine the method status, if it successful, the message and the data returned from the method.
+
+Assuming that we want to initiate a payment, once we call the `initiateTransfer` method, we can get the `typed response` directly from the variable the method call was assigned to. We can then redirect the user to the payment page is the method returns a success response.
+
+
+```typescript
+
+const response = await squad.initiatePayment({
+  status: "success",
+  gatewayMessage: "Payment initialization successful",
+  transactionReference: "Ercaspay_TX_123456789",
+  amount: 20000,
+  accountNumber: "0123456789",
+  accountEmail: "teamgodspeed@gmail.com",
+  accountName: "Adedoyin Emmanuel Adeniyi",
+  accountReference: "USER_REF_001",
+  bankName: "Wema Bank",
+  expires_in: 3600, // Expires in 1 hour (3600 seconds)
+});
+
+
+
+// check if the response was successful, if not, return a response to the client.
+
+if(!response.success)
+  return res.status(response.status).json({message:response.message});
+
+// Response was successful, I can now get the checkout_url
+
+const checkoutUrl = response.data.checkout_url;
+
+// redirect the client to the checkout_url
+
+res.redirect(checkoutUrl); // assuming you are using express JS
+```
+
+
+### Initiate Transfer Method
+
+To initiate a transfer, you'll need to make a call to our API with a payload that adheres to the `IIntitializeTransferResponse interface`. This interface defines the following properties:
+
+
+| Property | Description |
+|---|---|
+| `status` | The status of the transaction (e.g., "success", "pending", "failed") |
+| `gatewayMessage` | A message from the gateway about the transaction |
+| `transactionReference` | A unique reference for the transaction |
+| `amount` | The amount to be transferred |
+| `accountNumber` | The account number for the transfer |
+| `accountEmail` | The email address associated with the account |
+| `accountName` | The name of the account holder |
+| `accountReference` | A reference for the transaction |
+| `bankName` | The name of the bank |
+| `expires_in` | The number of seconds the transaction link will be valid |
