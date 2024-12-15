@@ -124,7 +124,7 @@ Assuming that we want to initiate a payment, once we call the `initiateTransfer`
 
 ```typescript
 
-const response = await squad.initiatePayment({
+const response = await Ercaspay.IntitializeTransfer({
   status: "success",
   gatewayMessage: "Payment initialization successful",
   transactionReference: "Ercaspay_TX_123456789",
