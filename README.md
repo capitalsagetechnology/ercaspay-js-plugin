@@ -26,6 +26,8 @@
     - [Get Transaction Details](#get-transaction-details)
       - [Parameters](#parameters-3)
       - [Example](#example-3)
+    - [Verify Transaction](#verify-transaction)
+      - [Parameters](#parameters-4)
 
 
 ## Introduction 🚀
@@ -307,4 +309,19 @@ Retrieves information about a specific transaction using its reference.
 ```typescript
 const response = await ercaspayCard.getDetails("txn_123456789");
 ```
+
+### Verify Transaction
+
+
+Checks the status of a transaction to ensure it has been successfully completed.
+
+#### Parameters
+
+- `reference` (String): A unique identifier for the transaction.
+
+```typescript
+const response = await ercaspayCard.verifyTransaction("txn_123456789");
+
+```
+
 
