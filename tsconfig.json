@@ -1,27 +1,40 @@
 {
   "compilerOptions": {
-    // Enable latest features
-    "lib": ["ESNext", "DOM"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
+    /* LANGUAGE COMPILATION OPTIONS */
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "module": "Node16",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
 
-    // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    /* EMIT RULES */
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": false,
+    "removeComments": false,
 
-    // Best practices
-    "strict": true,
-    "skipLibCheck": true,
+    /* TYPE CHECKING RULES */
+    "strict": false,
+   
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false, // tells the compiler to skip unused variables declared.
+    "noUnusedParameters": true,
+    "useUnknownInCatchVariables": true,
+    "noUncheckedIndexedAccess": true, // TLDR - Checking an indexed value (array[0]) now forces type <T | undefined> as there is no confirmation that index exists
 
-    // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
-  }
+    /* OTHER OPTIONS */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "baseUrl": "./",
+    "outDir": "./dist"
+  },
+  "include": ["**/*.ts"]
 }

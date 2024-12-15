@@ -1,16 +1,16 @@
-import axios, { Axios, type AxiosResponse } from "axios";
+import axios, { AxiosInstance, type AxiosResponse } from "axios";
 import type { IBaseResponse } from "./interfaces";
 
 export default abstract class ErcaspayBase {
   protected secretKey: string;
-  protected Axios: Axios;
+  protected Axios: AxiosInstance;
   protected baseUrl: string;
 
   protected environment: string = process?.env.NODE_ENV || "development";
 
   constructor(secretKey: string, environment?: "development" | "production") {
     if (!secretKey) throw new Error("Secret key is required");
-    
+
     /**
      *
      * Environment not set, defaulting to development

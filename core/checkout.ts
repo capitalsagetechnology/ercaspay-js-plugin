@@ -22,9 +22,7 @@ export default class ErcaspayCheckout extends ErcaspayBase {
     return response.data;
   }
 
-  public async verifyTransaction(
-    transactionReference: string
-  ) {
+  public async verifyTransaction(transactionReference: string) {
     if (!transactionReference) {
       throw new Error("Transaction reference is required");
     }
@@ -34,6 +32,5 @@ export default class ErcaspayCheckout extends ErcaspayBase {
     >(`${this.checkoutBaseUrl}/transaction/verify/${transactionReference}`);
 
     return response.data;
-
   }
 }
