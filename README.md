@@ -19,6 +19,7 @@
       - [Parameters](#parameters)
       - [Example](#example-1)
   - [Submit an OTP](#submit-an-otp)
+      - [Parameters](#parameters-1)
 
 
 ## Introduction 🚀
@@ -246,8 +247,25 @@ const response = await ercaspayCard.initiatePayment({
 ```
 ## Submit an OTP
 
+Authenticates a transaction by submitting the OTP sent to the customer.
 
+#### Parameters
 
+- `data(Object)`: Data for Submitting Otp.
+
+  - `otp` (String): The one-time password received by the customer.
+  - `gatewayReference` (Object): A unique reference returned during payment initialization.
+  - `transactionReference` (Object):A unique identifier for the transaction.
+- 
+
+```typescript
+const response = await ercaspayCard.submitOTP({
+  otp: "123456",
+  gatewayReference: "gw_123456",
+  transactionReference: "txn_123456789"
+});
+
+```
 
 
 
