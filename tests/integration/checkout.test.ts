@@ -35,4 +35,23 @@ describe("Checkout Module Test 🧪", () => {
       expect(response.responseBody.transactionReference).toBeString();
     });
   });
+
+  test("Verify Checkout Transaction", async () => {
+    it("Should return a 200 status code, with appropriate typed response", async () => {
+      const validTransactionRef = "ERCS|20241214214035|1734208835283";
+
+      const response = await client.checkout.verifyTransaction(
+        validTransactionRef
+      );
+
+      expect(response.responseCode).toBe("success");
+      expect(response.requestSuccessful).toBeTrue();
+      expect(response.responseBody).toBeObject();
+      expect(response.responseBody.amount).toBeNumber();
+      expect(response.responseBody.currency).toBeString();
+      expect(response.responseBody.status).toBeString();
+      expect(response.responseBody.customer).toBeObject();
+
+    });
+  });
 });
