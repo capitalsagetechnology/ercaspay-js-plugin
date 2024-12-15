@@ -31,6 +31,12 @@
     - [Initiate a USSD Code Request](#initiate-a-ussd-code-request)
       - [Parameters](#parameters-5)
       - [Response](#response)
+    - [Get Supported Bank List](#get-supported-bank-list)
+      - [Parameters](#parameters-6)
+      - [Response](#response-1)
+    - [Cancel a USSD Transaction](#cancel-a-ussd-transaction)
+      - [Parameters](#parameters-7)
+      - [Response](#response-2)
 
 
 ## Introduction 🚀
@@ -343,13 +349,13 @@ Generates a USSD code for making payments by providing transaction details and t
 #### Response
 The response includes the following fields:
 
-- **status** (String): The status of the operation (e.g., "success").
-- **gatewayMessage** (String): Message from the payment gateway.
-- **transactionReference** (String): The reference for the initiated transaction.
-- **gatewayReference** (String): A unique reference returned by the payment gateway.
-- **ussdCode** (String): The generated USSD code for the transaction.
-- **paymentCode** (String): A unique payment code associated with the transaction.
-- **amount** (Number): The transaction amount.
+- `status` (String): The status of the operation (e.g., "success").
+- `gatewayMessage` (String): Message from the payment gateway.
+- `transactionReference` (String): The reference for the initiated transaction.
+- `gatewayReference` (String): A unique reference returned by the payment gateway.
+- `ussdCode` (String): The generated USSD code for the transaction.
+- `paymentCode` (String): A unique payment code associated with the transaction.
+- `amount` (Number): The transaction amount.
 
 ```typescript
 
@@ -358,5 +364,49 @@ const response = await ercaspayUSSD.initiateCode({
   amount: 10000,
   bankName: "First Bank"
 });
+
+```
+
+### Get Supported Bank List
+
+Retrieves the list of banks supported for USSD transactions.
+
+#### Parameters
+
+None
+
+#### Response
+
+An array of strings representing the names of the supported banks.
+
+
+```typescript
+const response = await ercaspayUSSD.getBankList();
+console.log(response.data); // ["First Bank", "GTBank", "Access Bank", ...]
+
+
+```
+
+### Cancel a USSD Transaction
+
+Cancels an ongoing USSD transaction using its reference.
+
+#### Parameters
+
+- `transactionReference` (Object): The unique identifier for the transaction to be canceled.
+
+#### Response
+
+The response may include details about the cancellation status, such as:
+
+
+- `status` (String):  Indicates whether the transaction was successfully canceled.
+- `gatewayMessage` (String):  Message from the payment gateway regarding the cancellation.
+- `transactionReference` (String): The reference of the transaction being canceled.
+
+
+```typescript
+const response = await ercaspayUSSD.cancel("txn_123456789");
+console.log(response.data);
 
 ```
