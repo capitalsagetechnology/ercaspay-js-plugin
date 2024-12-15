@@ -16,7 +16,7 @@ import {
 } from "./../helpers/validations";
 
 export default class ErcaspayTransaction extends ErcaspayBase {
-  private readonly transactionBaseUrl = "/third-party/payment";
+  private readonly transactionBaseUrl = "/payment";
 
   public async getDetails(transactionReference: string) {
     if (!transactionReference) {
