@@ -20,6 +20,12 @@
       - [Example](#example-1)
   - [Submit an OTP](#submit-an-otp)
       - [Parameters](#parameters-1)
+    - [Resend an OTP](#resend-an-otp)
+      - [Parameters](#parameters-2)
+      - [Example](#example-2)
+    - [Get Transaction Details](#get-transaction-details)
+      - [Parameters](#parameters-3)
+      - [Example](#example-3)
 
 
 ## Introduction 🚀
@@ -267,6 +273,38 @@ const response = await ercaspayCard.submitOTP({
 
 ```
 
+### Resend an OTP
 
+Requests a new OTP for a transaction when the initial OTP is not received or has expired.
 
+#### Parameters
+
+- `data(Object)`: Data for resending the OTP.
+
+  - `gatewayReference` (Object): A unique reference returned during payment initialization.
+  - `transactionReference` (Object):A unique identifier for the transaction.
+
+#### Example
+
+```typescript
+const response = await ercaspayCard.resendOTP({
+  gatewayReference: "gw_123456",
+  transactionReference: "txn_123456789"
+});
+
+```
+
+### Get Transaction Details
+
+Retrieves information about a specific transaction using its reference.
+
+#### Parameters
+
+ - `transactionReference` (Object):A unique identifier for the transaction.
+
+#### Example
+
+```typescript
+const response = await ercaspayCard.getDetails("txn_123456789");
+```
 
