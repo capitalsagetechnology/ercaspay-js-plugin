@@ -37,6 +37,10 @@
     - [Cancel a USSD Transaction](#cancel-a-ussd-transaction)
       - [Parameters](#parameters-7)
       - [Response](#response-2)
+    - [**Initiate a Checkout Transaction**](#initiate-a-checkout-transaction)
+      - [**Parameters**](#parameters-8)
+      - [**Response**](#response-3)
+      - [Response](#response-4)
 
 
 ## Introduction 🚀
@@ -410,3 +414,49 @@ const response = await ercaspayUSSD.cancel("txn_123456789");
 console.log(response.data);
 
 ```
+
+
+### **Initiate a Checkout Transaction**  
+Initiates a checkout transaction by providing payment details, customer information, and optional metadata.  
+
+#### **Parameters**  
+- `data` (Object): Details of the transaction.  
+  - `amount` (Number): The transaction amount.  
+  - `paymentReference` (String): A unique identifier for the payment.  
+  - `paymentMethods` (String): Accepted payment methods (e.g., "card", "bank").  
+  - `customerName` (String): The full name of the customer.  
+  - `customerEmail` (String): The email address of the customer.  
+  - `customerPhoneNumber` (String, optional): The phone number of the customer.  
+  - `currency` (String): The transaction currency (e.g., "NGN", "USD").  
+  - `feeBearer` (String, optional): Indicates who bears the transaction fee (`"customer"` or `"merchant"`).  
+  - `redirectUrl` (String, optional): The URL to redirect the user after payment.  
+  - `description` (String, optional): A brief description of the transaction.  
+  - `metadata` (Object, optional): Additional data related to the transaction.  
+
+#### **Response**  
+The response includes the following fields:  
+- `paymentReference` (String): The unique identifier for the payment.  
+- `transactionReference` (String): The unique identifier for the transaction.  
+- `checkoutUrl` (String): The URL to complete the payment process.  
+
+#### Response
+The response includes the following fields:
+
+```typescript
+const response = await ercaspayCheckout.initiateTransaction({
+  amount: 5000,
+  paymentReference: "pay_123456789",
+  paymentMethods: "card",
+  customerName: "John Doe",
+  customerEmail: "johndoe@example.com",
+  customerPhoneNumber: "2348012345678",
+  currency: "NGN",
+  feeBearer: "customer",
+  redirectUrl: "https://example.com/redirect",
+  description: "Payment for product ABC",
+  metadata: { orderId: "ORD12345" },
+});
+
+console.log(response.data.checkoutUrl);
+```
+
