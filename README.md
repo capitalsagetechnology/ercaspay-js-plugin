@@ -1,4 +1,6 @@
-<img src="./assets/ercaspay.png" alt="Ercaspay Logo" width="200" />
+<!-- img src="./assets/ercaspay.png" alt="Ercaspay Logo" width="200" -->
+![GitHub Header](https://github.com/user-attachments/assets/24c2a49a-393c-46d5-a7f1-0b4994b081a2)
+
 
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
@@ -142,7 +144,6 @@ export interface BaseResponseProps {
   data?: {};
 }
 ```
-
 
 So from every method call, I can determine the method status, if it successful, the message and the data returned from the method.
 
@@ -459,4 +460,3 @@ const response = await ercaspayCheckout.initiateTransaction({
 
 console.log(response.data.checkoutUrl);
 ```
-
