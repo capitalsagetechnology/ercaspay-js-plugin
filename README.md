@@ -28,6 +28,9 @@
       - [Example](#example-3)
     - [Verify Transaction](#verify-transaction)
       - [Parameters](#parameters-4)
+    - [Initiate a USSD Code Request](#initiate-a-ussd-code-request)
+      - [Parameters](#parameters-5)
+      - [Response](#response)
 
 
 ## Introduction 🚀
@@ -323,5 +326,37 @@ Checks the status of a transaction to ensure it has been successfully completed.
 const response = await ercaspayCard.verifyTransaction("txn_123456789");
 
 ```
+### Initiate a USSD Code Request
+
+Generates a USSD code for making payments by providing transaction details and the bank name.
 
 
+#### Parameters
+
+- `data(Object)`: Data for generating the USSD code.
+
+  - `transactionReference` (Object): A unique reference returned during payment initialization.
+  - `amount` (Number):The transaction amount.
+  - `bankName` (String):The name of the bank selected for payment.
+
+
+#### Response
+The response includes the following fields:
+
+- **status** (String): The status of the operation (e.g., "success").
+- **gatewayMessage** (String): Message from the payment gateway.
+- **transactionReference** (String): The reference for the initiated transaction.
+- **gatewayReference** (String): A unique reference returned by the payment gateway.
+- **ussdCode** (String): The generated USSD code for the transaction.
+- **paymentCode** (String): A unique payment code associated with the transaction.
+- **amount** (Number): The transaction amount.
+
+```typescript
+
+const response = await ercaspayUSSD.initiateCode({
+  transactionReference: "txn_123456789",
+  amount: 10000,
+  bankName: "First Bank"
+});
+
+```
