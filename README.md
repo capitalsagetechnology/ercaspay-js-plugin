@@ -15,6 +15,10 @@
     - [SDK Typed Response](#sdk-typed-response)
     - [Initiate Transfer Method](#initiate-transfer-method)
       - [Example](#example)
+  - [Initiates a Card Payment](#initiates-a-card-payment)
+      - [Parameters](#parameters)
+      - [Example](#example-1)
+  - [Submit an OTP](#submit-an-otp)
 
 
 ## Introduction 🚀
@@ -125,7 +129,7 @@ Assuming that we want to initiate a payment, once we call the `initiateTransfer`
 
 ```typescript
 
-const response = await Ercaspay.IntitializeTransfer({
+const response = await Ercaspay.initializeTransfer({
   status: "success",
   gatewayMessage: "Payment initialization successful",
   transactionReference: "Ercaspay_TX_123456789",
@@ -157,7 +161,7 @@ res.redirect(checkoutUrl); // assuming you are using express JS
 
 ### Initiate Transfer Method
 
-To initiate a transfer, you'll need to make a call to our API with a payload that adheres to the `IIntitializeTransferResponse interface`. This interface defines the following properties:
+To initiate a transfer, you'll need to make a call to our API with a payload that adheres to the `initializeTransfer interface`. This interface defines the following properties:
 
 
 | Property | Description |
@@ -200,5 +204,51 @@ const checkoutUrl = response.data.checkout_url;
 //redirect the client to the checkout url. Assuming you're using express
 res.redirect(checkoutUrl);
 ```
+
+## Initiates a Card Payment
+
+Initializes a payment process by sending required payment details, device information, and a transaction reference.
+
+#### Parameters
+
+- `data(Object)`: Data for initiating the payment.
+  - `payload` (Number): Base64-encoded payment details containing sensitive card information.
+  - `transactionReference` (String): A unique identifier for the transaction.
+  - `deviceDetails ` (Object): Information about the user's device for 3D Secure validation.
+
+#### Example
+
+```typescript
+const response = await ercaspayCard.initiatePayment({
+  payload: "base64-encoded-payment-details",
+  transactionReference: "txn_123456789",
+  deviceDetails: {
+    payerDeviceDto: {
+      device: {
+        browser: "Chrome",
+        browserDetails: {
+          "3DSecureChallengeWindowSize": "03",
+          acceptHeaders: "application/json",
+          colorDepth: 24,
+          javaEnabled: true,
+          language: "en-US",
+          screenHeight: 1080,
+          screenWidth: 1920,
+          timeZone: -60
+        },
+        ipAddress: "192.168.1.1"
+      }
+    }
+  }
+});
+
+
+```
+## Submit an OTP
+
+
+
+
+
 
 
