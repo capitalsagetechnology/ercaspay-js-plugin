@@ -14,6 +14,7 @@
   - [Usage 🚦](#usage-)
     - [SDK Typed Response](#sdk-typed-response)
     - [Initiate Transfer Method](#initiate-transfer-method)
+      - [Example](#example)
 
 
 ## Introduction 🚀
@@ -171,3 +172,33 @@ To initiate a transfer, you'll need to make a call to our API with a payload tha
 | `accountReference` | A reference for the transaction |
 | `bankName` | The name of the bank |
 | `expires_in` | The number of seconds the transaction link will be valid |
+
+
+#### Example
+
+```typescript
+const response = await Ercaspay.IntitializeTransfer({
+  status: "success",
+  gatewayMessage: "Payment initialization successful",
+  transactionReference: "Ercaspay_TX_123456789",
+  amount: 20000,
+  accountNumber: "0123456789",
+  accountEmail: "teamgodspeed@gmail.com",
+  accountName: "Adedoyin Emmanuel Adeniyi",
+  accountReference: "USER_REF_001",
+  bankName: "Wema Bank",
+  expires_in: 3600, // Expires in 1 hour (3600 seconds)
+});
+
+
+```
+As you know, the SDK comes with `Typed Responses` which means automatic type definitions for API responses. You can easily redirect the user to the checkout url
+
+```typescript
+const checkoutUrl = response.data.checkout_url;
+
+//redirect the client to the checkout url. Assuming you're using express
+res.redirect(checkoutUrl);
+```
+
+
