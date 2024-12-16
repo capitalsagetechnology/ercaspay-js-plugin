@@ -1,4 +1,4 @@
-![GitHub Header](/assets/header.png)
+![](assets/header.png)
 
 # Contributing To Ercaspay JavaScript | TypeScript SDK
 

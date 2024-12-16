@@ -1,4 +1,4 @@
-![GitHub Header](/assets/header.png)
+![](assets/header.png)
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
 
