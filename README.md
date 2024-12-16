@@ -13,19 +13,20 @@
   - [Installation 💽](#installation-)
   - [Usage 🚦](#usage-)
     - [SDK Typed Response](#sdk-typed-response)
-    - [Initiate Transfer Method](#initiate-transfer-method)
+    - [ErcaspayCheckout Class](#ercaspaycheckout-class)
       - [Example](#example)
+      - [Example](#example-1)
   - [Initiates a Card Payment](#initiates-a-card-payment)
     - [Parameters](#parameters)
-    - [Example](#example-1)
+    - [Example](#example-2)
   - [Submit an OTP](#submit-an-otp)
     - [Parameters](#parameters-1)
     - [Resend an OTP](#resend-an-otp)
       - [Parameters](#parameters-2)
-      - [Example](#example-2)
+      - [Example](#example-3)
     - [Get Transaction Details](#get-transaction-details)
       - [Parameters](#parameters-3)
-      - [Example](#example-3)
+      - [Example](#example-4)
     - [Verify Transaction](#verify-transaction)
       - [Parameters](#parameters-4)
     - [Initiate a USSD Code Request](#initiate-a-ussd-code-request)
@@ -44,7 +45,7 @@
     - [Verify a Checkout Transaction](#verify-a-checkout-transaction)
   - [Parameters](#parameters-9)
   - [Response](#response-5)
-  - [Example](#example-4)
+  - [Example](#example-5)
 
 ## Introduction 🚀
 
@@ -180,7 +181,7 @@ const ercaspay = new ErcaspayClient(
   process.env.NODE_ENV as string
 );
 
-const response = await ercaspay.checkout.initializeTransfer({
+const response = await ercaspay.checkout.initiateTransaction({
   amount: 10000,
   paymentReference: "R5md7gd9b4s3h2j5d67g",
   paymentMethods: "card,bank-transfer,ussd,qrcode",
@@ -205,54 +206,201 @@ if (!response.requestSuccessful)
 
 // Response was successful, I can now get the checkout_url
 
-const checkoutUrl = response.responseBody.transactionReference;
+const checkoutUrl = response.responseBody.checkoutUrl;
 
 // redirect the client to the checkout_url
 
 res.redirect(checkoutUrl); // assuming you are using express JS
 ```
 
-### Initiate Transfer Method
+### ErcaspayCheckout Class
 
-To initiate a transfer, you'll need to make a call to our API with a payload that adheres to the `initializeTransfer interface`. This interface defines the following properties:
+The `ErcaspayCheckout` class is part of the Ercaspay JS SDK and provides methods to handle transactions related to the ErcasPay Checkout platform. It allows you to initiate a transaction and verify the status of a transaction using its reference.
 
-| Property               | Description                                                          |
-| ---------------------- | -------------------------------------------------------------------- |
-| `status`               | The status of the transaction (e.g., "success", "pending", "failed") |
-| `gatewayMessage`       | A message from the gateway about the transaction                     |
-| `transactionReference` | A unique reference for the transaction                               |
-| `amount`               | The amount to be transferred                                         |
-| `accountNumber`        | The account number for the transfer                                  |
-| `accountEmail`         | The email address associated with the account                        |
-| `accountName`          | The name of the account holder                                       |
-| `accountReference`     | A reference for the transaction                                      |
-| `bankName`             | The name of the bank                                                 |
-| `expires_in`           | The number of seconds the transaction link will be valid             |
+**Methods**
+
+1. `initiateTransaction`: Initiates a checkout transaction on the ErcasPay platform. The method first validates the input data using a predefined schema, and then it sends a request to initiate the transaction.
 
 #### Example
 
 ```typescript
-const response = await Ercaspay.IntitializeTransfer({
-  status: "success",
-  gatewayMessage: "Payment initialization successful",
-  transactionReference: "Ercaspay_TX_123456789",
-  amount: 20000,
-  accountNumber: "0123456789",
-  accountEmail: "teamgodspeed@gmail.com",
-  accountName: "Adedoyin Emmanuel Adeniyi",
-  accountReference: "USER_REF_001",
-  bankName: "Wema Bank",
-  expires_in: 3600, // Expires in 1 hour (3600 seconds)
+const response = await client.checkout.initiateTransaction({
+  amount: 10000,
+  paymentReference: "R5md7gd9b4s3h2j5d67g",
+  paymentMethods: "card,bank-transfer,ussd,qrcode",
+  customerName: "Adedoyin Emmanuel",
+  customerEmail: "hi@adedoyinemmanuel.dev",
+  customerPhoneNumber: "09061626364",
+  redirectUrl: "https://github.com/adedoyin-emmanuel",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  currency: "NGN",
+  feeBearer: "customer",
+  metadata: {
+    firstname: "Temi",
+    lastname: "Girl",
+    email: "temigirl@mail.com",
+  },
 });
 ```
 
-As you know, the SDK comes with `Typed Responses` which means automatic type definitions for API responses. You can easily redirect the user to the checkout url
+As you know, the SDK comes with `Typed Responses` which means automatic type definitions for API responses. Below is an example of what the `initiateTransaction` method returns.
 
 ```typescript
-const checkoutUrl = response.data.checkout_url;
+/**
+ * The unique payment reference.
+ * @type {string}
+ */
+paymentReference: string;
 
-//redirect the client to the checkout url. Assuming you're using express
-res.redirect(checkoutUrl);
+/**
+ * A unique transaction reference.
+ * @type {string}
+ */
+transactionReference: string;
+
+/**
+ * The URL to complete the checkout process.
+ * @type {string}
+ */
+checkoutUrl: string;
+```
+
+2. `verifyTransaction`: Verifies the status of a checkout transaction using its unique reference. This is useful for checking if a transaction has been successfully completed.
+
+#### Example
+
+```typescript
+const validTransactionRef = "ERCS|20241214214035|1734208835283";
+
+const response = await client.checkout.verifyTransaction(validTransactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for verifying a checkout transaction.
+ */
+export interface IVerifyCheckoutTransactionResponse {
+  /**
+   * The domain where the transaction was processed.
+   * @type {string}
+   */
+  domain: string;
+
+  /**
+   * The status of the transaction (e.g., success, failed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * The ERCs reference associated with the transaction.
+   * @type {string}
+   */
+  ercs_reference: string;
+
+  /**
+   * The unique transaction reference.
+   * @type {string}
+   */
+  tx_reference: string;
+
+  /**
+   * The amount for the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * A description of the transaction.
+   * @type {string}
+   */
+  description: string;
+
+  /**
+   * The timestamp when the payment was made.
+   * @type {string}
+   */
+  paid_at: string;
+
+  /**
+   * The timestamp when the transaction was created.
+   * @type {string}
+   */
+  created_at: string;
+
+  /**
+   * The payment channel used for the transaction.
+   * @type {string}
+   */
+  channel: string;
+
+  /**
+   * The currency in which the transaction was processed.
+   * @type {string}
+   */
+  currency: string;
+
+  /**
+   * Additional metadata related to the transaction (optional).
+   * @type {Record<string, any> | undefined}
+   */
+  metadata?: Record<string, any>;
+
+  /**
+   * The fee charged for processing the transaction.
+   * @type {number}
+   */
+  fee: number;
+
+  /**
+   * Specifies who bears the transaction fee ("customer" or "merchant").
+   * @type {string}
+   */
+  fee_bearer: string;
+
+  /**
+   * The amount that was actually settled for the transaction.
+   * @type {number}
+   */
+  settled_amount: number;
+
+  /**
+   * Information about the customer involved in the transaction.
+   * @type {ICustomer}
+   */
+  customer: ICustomer;
+}
+
+/**
+ * Represents the details of a customer.
+ */
+export interface ICustomer {
+  /**
+   * The name of the customer.
+   * @type {string}
+   */
+  name: string;
+
+  /**
+   * The email address of the customer.
+   * @type {string}
+   */
+  email: string;
+
+  /**
+   * The phone number of the customer (optional).
+   * @type {string | undefined}
+   */
+  phone_number?: string;
+
+  /**
+   * A unique reference identifier for the customer.
+   * @type {string}
+   */
+  reference: string;
+}
 ```
 
 ## Initiates a Card Payment
