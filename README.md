@@ -16,36 +16,10 @@
     - [ErcaspayCheckout Class](#ercaspaycheckout-class)
       - [Example](#example)
       - [Example](#example-1)
-  - [Initiates a Card Payment](#initiates-a-card-payment)
-    - [Parameters](#parameters)
-    - [Example](#example-2)
-  - [Submit an OTP](#submit-an-otp)
-    - [Parameters](#parameters-1)
-    - [Resend an OTP](#resend-an-otp)
-      - [Parameters](#parameters-2)
-      - [Example](#example-3)
-    - [Get Transaction Details](#get-transaction-details)
-      - [Parameters](#parameters-3)
-      - [Example](#example-4)
-    - [Verify Transaction](#verify-transaction)
-      - [Parameters](#parameters-4)
-    - [Initiate a USSD Code Request](#initiate-a-ussd-code-request)
-      - [Parameters](#parameters-5)
-      - [Response](#response)
-    - [Get Supported Bank List](#get-supported-bank-list)
-      - [Parameters](#parameters-6)
-      - [Response](#response-1)
-    - [Cancel a USSD Transaction](#cancel-a-ussd-transaction)
-      - [Parameters](#parameters-7)
-      - [Response](#response-2)
-    - [Initiate a Checkout Transaction](#initiate-a-checkout-transaction)
-      - [Parameters](#parameters-8)
-      - [Response](#response-3)
-      - [Response](#response-4)
-    - [Verify a Checkout Transaction](#verify-a-checkout-transaction)
-  - [Parameters](#parameters-9)
-  - [Response](#response-5)
-  - [Example](#example-5)
+    - [ErcaspayCard Class](#ercaspaycard-class)
+    - [Ercaspay Bankransfer Class](#ercaspay-bankransfer-class)
+    - [Ercaspay USSD Class](#ercaspay-ussd-class)
+    - [Ercaspay Transaction Class](#ercaspay-transaction-class)
 
 ## Introduction 🚀
 
@@ -224,7 +198,7 @@ The `ErcaspayCheckout` class is part of the Ercaspay JS SDK and provides methods
 #### Example
 
 ```typescript
-const response = await client.checkout.initiateTransaction({
+const response = await ercaspay.checkout.initiateTransaction({
   amount: 10000,
   paymentReference: "R5md7gd9b4s3h2j5d67g",
   paymentMethods: "card,bank-transfer,ussd,qrcode",
@@ -272,7 +246,7 @@ checkoutUrl: string;
 ```typescript
 const validTransactionRef = "ERCS|20241214214035|1734208835283";
 
-const response = await client.checkout.verifyTransaction(validTransactionRef);
+const response = await ercaspay.checkout.verifyTransaction(validTransactionRef);
 ```
 
 **Typed Response**
@@ -403,268 +377,717 @@ export interface ICustomer {
 }
 ```
 
-## Initiates a Card Payment
+### ErcaspayCard Class
 
-Initializes a payment process by sending required payment details, device information, and a transaction reference.
+This class handles card-related payment flows for the Ercaspay system. It supports initiating payments, submitting and resending OTPs, retrieving transaction details, and verifying transactions.
 
-#### Parameters
+**Methods**
 
-- `data(Object)`: Data for initiating the payment.
-  - `payload` (Number): Base64-encoded payment details containing sensitive card information.
-  - `transactionReference` (String): A unique identifier for the transaction.
-  - `deviceDetails ` (Object): Information about the user's device for 3D Secure validation.
-
-#### Example
+1. `initiatePayment`: Initiates a card payment transaction. Depending on the type of card, the response may include a link to a 3D authentication page or a notification that an OTP has been sent to the registered phone number.
 
 ```typescript
-const response = await ercaspayCard.initiatePayment({
-  payload: "base64-encoded-payment-details",
-  transactionReference: "txn_123456789",
+const paymentData = {
+  payload: "encrypted_card_details",
+  transactionReference: "unique_transaction_reference",
   deviceDetails: {
     payerDeviceDto: {
       device: {
         browser: "Chrome",
         browserDetails: {
-          "3DSecureChallengeWindowSize": "03",
+          "3DSecureChallengeWindowSize": "800x600",
           acceptHeaders: "application/json",
           colorDepth: 24,
           javaEnabled: true,
           language: "en-US",
           screenHeight: 1080,
           screenWidth: 1920,
-          timeZone: -60,
+          timeZone: -180,
         },
-        ipAddress: "192.168.1.1",
       },
     },
+  },
+};
+
+const response = await ercaspay.card.initiatePayment(paymentData);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for a card transaction.
+ */
+export interface ICardResponse {
+  /**
+   * A code representing the status of the transaction.
+   * @type {string}
+   */
+  code: string;
+
+  /**
+   * The status of the transaction (e.g., success, failed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A message from the gateway providing details about the transaction status.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * A support message providing additional assistance or instructions (optional).
+   * @type {string | undefined}
+   */
+  supportMessage?: string;
+
+  /**
+   * A unique reference for the transaction.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * A unique payment reference.
+   * @type {string}
+   */
+  paymentReference: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The URL to redirect to for completing the transaction.
+   * @type {string}
+   */
+  redirectUrl: string;
+
+  /**
+   * A unique reference from the gateway (optional).
+   * @type {string | undefined}
+   */
+  gatewayReference?: string;
+
+  /**
+   * The ECI flag for the transaction (optional).
+   * @type {string | undefined}
+   */
+  eciFlag?: string;
+
+  /**
+   * The authentication code for the transaction (optional).
+   * @type {string | undefined}
+   */
+  transactionAuth?: string;
+
+  /**
+   * The transaction ID (optional).
+   * @type {string | undefined}
+   */
+  transactionId?: string;
+
+  /**
+   * A link to authenticate the transaction (optional).
+   * @type {string | undefined}
+   */
+  transactionAuthLink?: string;
+}
+```
+
+2. `submitOTP`: Submits an OTP for card validation. If the OTP is valid, the transaction is processed by the customer's payment institution.
+
+**Example**
+
+```typescript
+const otpData = {
+  otp: "123456",
+  gatewayReference: "gateway_reference",
+  transactionReference: "transaction_reference",
+};
+
+const response = await ercarspay.card.submitOTP(otpData);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure after submitting an OTP for a transaction.
+ */
+export interface ISubmitOTPResponse {
+  /**
+   * The status of the OTP submission.
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A message from the gateway providing additional details.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * A unique reference for the transaction.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * A unique payment reference.
+   * @type {string}
+   */
+  paymentReference: string;
+
+  /**
+   * The amount involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The URL to call back after submitting the OTP.
+   * @type {string}
+   */
+  callbackUrl: string;
+}
+```
+
+3. `resendOTP`: Resends an OTP for card validation. Useful if the user did not receive the OTP or it expired.
+
+**Example**
+
+```typescript
+const resendOTPData = {
+  transactionReference: "transaction_reference",
+  gatewayReference: "gateway_reference",
+};
+
+const response = await ercaspay.card.resendOTP(resendOTPData);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure after resending an OTP.
+ */
+export interface IResendOTPResponse
+  extends Omit<ISubmitOTPResponse, "amount" | "callbackUrl"> {}
+```
+
+4. `getDetails`: Retrieves the details of a card transaction. Useful for transaction monitoring, reconciliation, and auditing.
+
+**Example**
+
+```typescript
+const transactionReference = "transaction_reference";
+const response = await ercaspay.card.getDetails(transactionReference);
+```
+
+**Typed Response**
+
+```typescript
+export interface IGetCardDetailsResponse {
+  /**
+   * The amount involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * A unique reference for the transaction.
+   * @type {string}
+   */
+  reference: string;
+
+  /**
+   * The currency in which the transaction is processed.
+   * @type {string}
+   */
+  currency: string;
+}
+```
+
+5. `verifyTransaction`: Verifies the validity of a card transaction. Confirms whether the transaction is authentic and can proceed further.
+
+**Example**
+
+```typescript
+const transactionReference = "transaction_reference";
+const response = await ercaspay.card.verifyTransaction(transactionReference);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for verifying a card transaction.
+ */
+export interface IVerifyCardTransactionResponse {}
+```
+
+### Ercaspay Bankransfer Class
+
+The `ErcaspayBankTransfer` class is part of the Ercaspay SDK and handles the initiation of bank transfer payment flows. This class extends from the base ErcaspayBase class and provides functionality to interact with bank transfer payment-related API endpoints.
+
+**Methods**
+
+1. `initializeTransfer(transactionReference: string)`: Initializes a bank transfer transaction by requesting the necessary details for a specific transaction reference. The method checks if the provided reference is valid, then makes an API request to retrieve the bank account details and status for the transaction.
+
+**Example**
+
+```typescript
+const transactionReference = "ERCS|20241216175111|1734367871284";
+
+const response = await ercaspay.bankTransfer.initializeTransfer(
+  transactionReference
+);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure after initializing a transfer.
+ */
+export interface IIntitializeTransferResponse {
+  /**
+   * The status of the transfer (e.g., success, failed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A message from the gateway providing additional details about the transfer status.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * A unique reference for the transaction.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * The amount of money to be transferred.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The account number to which the transfer will be made.
+   * @type {string}
+   */
+  accountNumber: string;
+
+  /**
+   * The email address associated with the account receiving the transfer.
+   * @type {string}
+   */
+  accountEmail: string;
+
+  /**
+   * The name of the account holder receiving the transfer.
+   * @type {string}
+   */
+  accountName: string;
+
+  /**
+   * A unique reference for the account involved in the transfer.
+   * @type {string}
+   */
+  accountReference: string;
+
+  /**
+   * The name of the bank handling the transfer.
+   * @type {string}
+   */
+  bankName: string;
+
+  /**
+   * The time in seconds until the transfer expires.
+   * @type {number}
+   */
+  expires_in: number;
+}
+```
+
+### Ercaspay USSD Class
+
+The ErcaspayUSSD class is part of the Ercaspay SDK and provides methods for initiating USSD codes, fetching a list of supported banks, and canceling USSD transactions.
+
+**Methods**
+
+1. `initiateCode(data)`: Initiates a USSD code for a specific transaction reference. The method requires transaction details such as the transaction reference and bank name to be sent as part of the request. The input data is validated, and if successful, a USSD code is returned for completing the transaction.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20230418155255|1681833175587831";
+const response = await ercaspay.ussd.initiateCode({
+  bankName: "gtbank",
+  transactionReference: transactionRef,
+});
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for initiating a code for a transaction.
+ */
+export interface IInitiateCodeResponse {
+  /**
+   * The status of the initiation request (e.g., success, failure).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * The message provided by the gateway regarding the transaction initiation.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * The unique transaction reference associated with the initiation.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * A unique reference provided by the gateway for tracking the transaction.
+   * @type {string}
+   */
+  gatewayReference: string;
+
+  /**
+   * The USSD code used for the transaction.
+   * @type {string}
+   */
+  ussdCode: string;
+
+  /**
+   * The payment code used for the transaction.
+   * @type {string}
+   */
+  paymentCode: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The time in seconds until the code expires.
+   * @type {number}
+   */
+  expires_in: number;
+}
+```
+
+2. `getBankList()`: Fetches the list of supported banks for USSD transactions. This method retrieves the banks that are available for initiating USSD transactions via the Ercaspay system.
+
+**Example**
+
+```typescript
+const response = await ercaspay.ussd.getBankList();
+```
+
+**Typed Response**
+
+```typescript
+[
+  "access",
+  "alat",
+  "ecobank",
+  "FCMB",
+  "fidelity",
+  "firstbank",
+  "gtbank",
+  "heritage",
+  "keystone",
+  "polaris",
+  "stanbic",
+  "sterling",
+  "uba",
+  "union",
+  "unity",
+  "wema",
+  "zenith",
+];
+```
+
+### Ercaspay Transaction Class
+
+This class provides methods to interact with the transaction-related endpoints in the Ercaspay system. It includes methods to fetch transaction details, verify transactions, check transaction status, cancel transactions, and initiate new transactions.
+
+**Methods**
+
+1. `getDetails(transactionReference)`: Retrieve the details of a specific transaction using its unique reference.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20231113082706|1699860426792";
+const response = await ercaspay.transaction.getDetails(transactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for fetching transaction details.
+ */
+export interface IGetTransactionDetailsResponse {
+  /**
+   * The name of the customer involved in the transaction.
+   * @type {string}
+   */
+  customerName: string;
+
+  /**
+   * The email address of the customer involved in the transaction.
+   * @type {string}
+   */
+  customerEmail: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The business name associated with the transaction.
+   * @type {string}
+   */
+  businessName: string;
+
+  /**
+   * The business logo associated with the transaction.
+   * @type {string}
+   */
+  businessLogo: string;
+
+  /**
+   * The white-label configuration associated with the transaction.
+   * @type {IWhiteLabel}
+   */
+  whiteLabel: IWhiteLabel;
+
+  /**
+   * The payment methods available for the transaction.
+   * @type {string[]}
+   */
+  paymentMethods: string[];
+}
+```
+
+2. `verify(transactionReference)`: Verifies the status of a specific transaction using its unique reference.
+
+**Example**
+
+```typescript
+const validTransactionRef = "ERCS|20241216085942|1734335982170";
+const response = await ercaspay.transaction.verify(validTransactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for verifying a transaction.
+ */
+export interface IVerifyTransactionResponse
+  extends IVerifyCheckoutTransactionResponse {}
+```
+
+3. `getStatus(data)`: Fetches the status of a transaction using the provided data (payment method and transaction reference).
+
+**Example**
+
+```typescript
+const validTransactionRef = "ERCS|20241215043712|1734233832822";
+
+const response = await ercaspay.transaction.getStatus({
+  transactionReference: validTransactionRef,
+  paymentMethod: "card",
+  reference: "P1vpu4GwRb3i1MP",
+});
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for fetching the status of a transaction.
+ */
+export interface IGetTransactionStatusResponse {
+  /**
+   * A unique payment reference for the transaction.
+   * @type {string}
+   */
+  paymentReference: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The status of the transaction (e.g., pending, completed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A description of the transaction status.
+   * @type {string}
+   */
+  description: string;
+
+  /**
+   * The URL to call back after the transaction status is fetched.
+   * @type {string}
+   */
+  callbackUrl: string;
+}
+```
+
+4. `cancel(transactionReference)`: Cancels a specific transaction using its reference.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20241215043712|1734233832822";
+
+const response = await client.transaction.cancel(transactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for canceling a transaction.
+ */
+export interface ICancelTransactionResponse {
+  /**
+   * The URL to call back after canceling the transaction.
+   * @type {string}
+   */
+  callback_url: string;
+}
+```
+
+5. `initiate(data)`: Initiates a new transaction with the given data.
+
+**Example**
+
+```typescript
+const response = await ercaspay.transaction.initiate({
+  amount: 10000,
+  paymentReference: "R5md7gd9b4s3h2j5d67g",
+  paymentMethods: "card,bank-transfer,ussd,qrcode",
+  customerName: "Adedoyin Emmanuel",
+  customerEmail: "hi@adedoyinemmanuel.dev",
+  customerPhoneNumber: "09061626364",
+  redirectUrl: "https://github.com/adedoyin-emmanuel",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  currency: "NGN",
+  feeBearer: "customer",
+  metadata: {
+    firstname: "Temi",
+    lastname: "Girl",
+    email: "temigirl@mail.com",
   },
 });
 ```
 
-## Submit an OTP
-
-Authenticates a transaction by submitting the OTP sent to the customer.
-
-#### Parameters
-
-- `data(Object)`: Data for Submitting Otp.
-
-  - `otp` (String): The one-time password received by the customer.
-  - `gatewayReference` (Object): A unique reference returned during payment initialization.
-  - `transactionReference` (Object):A unique identifier for the transaction.
-
--
+**Typed Response**
 
 ```typescript
-const response = await ercaspayCard.submitOTP({
-  otp: "123456",
-  gatewayReference: "gw_123456",
-  transactionReference: "txn_123456789",
-});
-```
+/**
+ * Represents the response structure after initiating a transaction.
+ */
+export interface IInitiateTransactionResponse {
+  /**
+   * A unique payment reference for the transaction.
+   * @type {string}
+   */
+  paymentReference: string;
 
-### Resend an OTP
+  /**
+   * A unique transaction reference for the initiated transaction.
+   * @type {string}
+   */
+  transactionReference: string;
 
-Requests a new OTP for a transaction when the initial OTP is not received or has expired.
+  /**
+   * A URL to the checkout page for the transaction.
+   * @type {string}
+   */
+  checkoutUrl: string;
 
-#### Parameters
+  /**
+   * The white-label configuration associated with the transaction.
+   * @type {IWhiteLabel}
+   */
+  whiteLabel: IWhiteLabel;
+}
 
-- `data(Object)`: Data for resending the OTP.
+/**
+ * Represents the white-label configuration for the transaction system.
+ */
+export interface IWhiteLabel {
+  /**
+   * The unique identifier for the white-label configuration.
+   * @type {number}
+   */
+  id: number;
 
-  - `gatewayReference` (Object): A unique reference returned during payment initialization.
-  - `transactionReference` (Object):A unique identifier for the transaction.
+  /**
+   * The URL of the logo to be displayed for the white-label brand.
+   * @type {string}
+   */
+  logo_url: string;
 
-#### Example
+  /**
+   * The primary color associated with the white-label branding.
+   * @type {string}
+   */
+  primary_color: string;
 
-```typescript
-const response = await ercaspayCard.resendOTP({
-  gatewayReference: "gw_123456",
-  transactionReference: "txn_123456789",
-});
-```
+  /**
+   * The accent color associated with the white-label branding.
+   * @type {string}
+   */
+  accent_color: string;
 
-### Get Transaction Details
+  /**
+   * The font family used in the white-label branding.
+   * @type {string}
+   */
+  font_family: string;
 
-Retrieves information about a specific transaction using its reference.
+  /**
+   * The font color used in the white-label branding.
+   * @type {string}
+   */
+  font_color: string;
 
-#### Parameters
-
-- `transactionReference` (Object):A unique identifier for the transaction.
-
-#### Example
-
-```typescript
-const response = await ercaspayCard.getDetails("txn_123456789");
-```
-
-### Verify Transaction
-
-Checks the status of a transaction to ensure it has been successfully completed.
-
-#### Parameters
-
-- `reference` (String): A unique identifier for the transaction.
-
-```typescript
-const response = await ercaspayCard.verifyTransaction("txn_123456789");
-```
-
-### Initiate a USSD Code Request
-
-Generates a USSD code for making payments by providing transaction details and the bank name.
-
-#### Parameters
-
-- `data(Object)`: Data for generating the USSD code.
-
-  - `transactionReference` (Object): A unique reference returned during payment initialization.
-  - `amount` (Number):The transaction amount.
-  - `bankName` (String):The name of the bank selected for payment.
-
-#### Response
-
-The response includes the following fields:
-
-- `status` (String): The status of the operation (e.g., "success").
-- `gatewayMessage` (String): Message from the payment gateway.
-- `transactionReference` (String): The reference for the initiated transaction.
-- `gatewayReference` (String): A unique reference returned by the payment gateway.
-- `ussdCode` (String): The generated USSD code for the transaction.
-- `paymentCode` (String): A unique payment code associated with the transaction.
-- `amount` (Number): The transaction amount.
-
-```typescript
-const response = await ercaspayUSSD.initiateCode({
-  transactionReference: "txn_123456789",
-  amount: 10000,
-  bankName: "First Bank",
-});
-```
-
-### Get Supported Bank List
-
-Retrieves the list of banks supported for USSD transactions.
-
-#### Parameters
-
-None
-
-#### Response
-
-An array of strings representing the names of the supported banks.
-
-```typescript
-const response = await ercaspayUSSD.getBankList();
-console.log(response.data); // ["First Bank", "GTBank", "Access Bank", ...]
-```
-
-### Cancel a USSD Transaction
-
-Cancels an ongoing USSD transaction using its reference.
-
-#### Parameters
-
-- `transactionReference` (Object): The unique identifier for the transaction to be canceled.
-
-#### Response
-
-The response may include details about the cancellation status, such as:
-
-- `status` (String): Indicates whether the transaction was successfully canceled.
-- `gatewayMessage` (String): Message from the payment gateway regarding the cancellation.
-- `transactionReference` (String): The reference of the transaction being canceled.
-
-```typescript
-const response = await ercaspayUSSD.cancel("txn_123456789");
-console.log(response.data);
-```
-
-### Initiate a Checkout Transaction
-
-Initiates a checkout transaction by providing payment details, customer information, and optional metadata.
-
-#### Parameters
-
-- `data` (Object): Details of the transaction.
-  - `amount` (Number): The transaction amount.
-  - `paymentReference` (String): A unique identifier for the payment.
-  - `paymentMethods` (String): Accepted payment methods (e.g., "card", "bank").
-  - `customerName` (String): The full name of the customer.
-  - `customerEmail` (String): The email address of the customer.
-  - `customerPhoneNumber` (String, optional): The phone number of the customer.
-  - `currency` (String): The transaction currency (e.g., "NGN", "USD").
-  - `feeBearer` (String, optional): Indicates who bears the transaction fee (`"customer"` or `"merchant"`).
-  - `redirectUrl` (String, optional): The URL to redirect the user after payment.
-  - `description` (String, optional): A brief description of the transaction.
-  - `metadata` (Object, optional): Additional data related to the transaction.
-
-#### Response
-
-The response includes the following fields:
-
-- `paymentReference` (String): The unique identifier for the payment.
-- `transactionReference` (String): The unique identifier for the transaction.
-- `checkoutUrl` (String): The URL to complete the payment process.
-
-#### Response
-
-The response includes the following fields:
-
-```typescript
-const response = await ercaspayCheckout.initiateTransaction({
-  amount: 5000,
-  paymentReference: "pay_123456789",
-  paymentMethods: "card",
-  customerName: "John Doe",
-  customerEmail: "johndoe@example.com",
-  customerPhoneNumber: "2348012345678",
-  currency: "NGN",
-  feeBearer: "customer",
-  redirectUrl: "https://example.com/redirect",
-  description: "Payment for product ABC",
-  metadata: { orderId: "ORD12345" },
-});
-
-console.log(response.data.checkoutUrl);
-```
-
-### Verify a Checkout Transaction
-
-Verifies the status of a checkout transaction using its transaction reference.
-
-## Parameters
-
-- `transactionReference` (String): The unique identifier for the transaction to be verified.
-
-## Response
-
-The response includes details about the transaction:
-
-- `domain` (String): The transaction domain.
-- `status` (String): The status of the transaction (e.g., "success", "failed").
-- `ercs_reference` (String): The unique reference returned by the payment gateway.
-- `tx_reference` (String): The transaction reference.
-- `amount` (Number): The transaction amount.
-- `description` (String): A brief description of the transaction.
-- `paid_at` (String): The timestamp when the payment was completed.
-- `created_at` (String): The timestamp when the transaction was initiated.
-- `channel` (String): The payment channel used (e.g., "card", "bank").
-- `currency` (String): The transaction currency.
-- `metadata` (Object, optional): Additional data related to the transaction.
-- `fee` (Number): The transaction fee.
-- `fee_bearer` (String): Who bears the transaction fee ("customer" or "merchant").
-- `settled_amount` (Number): The amount settled after deducting fees.
-- `customer` (Object): Customer details.
-  - `name` (String): The customer's full name.
-  - `email` (String): The customer's email address.
-  - `phone_number` (String, optional): The customer's phone number.
-  - `reference` (String): A unique reference for the customer.
-
-## Example
-
-```typescript
-const response = await ercaspayCheckout.verifyTransaction("txn_987654321");
-
-console.log(response.data.status); // "success"
-console.log(response.data.customer.name); // "John Doe"
+  /**
+   * Indicates whether the white-label configuration has been approved by an admin.
+   * @type {string}
+   */
+  has_admin_approved: string;
+}
 ```
