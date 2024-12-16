@@ -65,4 +65,22 @@ describe("Transaction Module Test 🧪", () => {
       expect(response.responseBody).toBeObject();
     });
   });
+
+  describe("Check Transaction Status", async () => {
+    it("Should check a transaction status and return a 200 status code, with appropriate typed response", async () => {
+      const validTransactionRef = "ERCS|20241215043712|1734233832822";
+
+      const response = await client.transaction.getStatus({
+        transactionReference: validTransactionRef,
+        paymentMethod: "card",
+        reference: "P1vpu4GwRb3i1MP",
+      });
+
+      expect(response.requestSuccessful).toBeTrue();
+      expect(response.responseBody).toBeObject();
+      expect(response.responseBody.amount).toBeNumber();
+      expect(response.responseBody.status).toBeString();
+      expect(response.responseBody.description).toBeString();
+    });
+  });
 });
