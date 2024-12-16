@@ -62,6 +62,7 @@ export interface IResendOTPResponse
 export interface IGetCardDetailsResponse {
   amount: number;
   reference: string;
+  currency: string;
 }
 
 export interface IVerifyCardTransactionResponse {}

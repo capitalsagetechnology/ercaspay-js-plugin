@@ -17,7 +17,7 @@ import {
 } from "../helpers/validations";
 
 export default class ErcaspayCard extends ErcaspayBase {
-  private readonly cardBaseUrl = "/third-party/payment/cards";
+  private readonly cardBaseUrl = "/payment/cards";
   public async initiatePayment(
     data: ICardRequest
   ): Promise<IBaseResponse<ICardResponse>> {
