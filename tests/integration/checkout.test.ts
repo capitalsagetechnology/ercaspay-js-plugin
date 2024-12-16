@@ -7,7 +7,7 @@ describe("Checkout Module Test 🧪", () => {
     "development"
   );
 
-  test("Initiate Checkout Transaction", async () => {
+  describe("Initiate Checkout Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const response = await client.checkout.initiateTransaction({
         amount: 10000,
@@ -36,7 +36,7 @@ describe("Checkout Module Test 🧪", () => {
     });
   });
 
-  test("Verify Checkout Transaction", async () => {
+  describe("Verify Checkout Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const validTransactionRef = "ERCS|20241214214035|1734208835283";
 
@@ -51,7 +51,22 @@ describe("Checkout Module Test 🧪", () => {
       expect(response.responseBody.currency).toBeString();
       expect(response.responseBody.status).toBeString();
       expect(response.responseBody.customer).toBeObject();
+      expect(response.responseBody.fee).toBeNumber();
+      expect(response.responseBody.settled_amount).toBeNumber();
+      expect(response.responseBody.tx_reference).toBeString();
+      expect(response.responseBody.domain).toBeString();
+      expect(response.responseBody.paid_at).toBeString();
+      expect(response.responseBody.created_at).toBeString();
+      expect(response.responseBody.channel).toBeString();
+      expect(response.responseBody.ercs_reference).toBeString();
+    });
 
+    it("Should throw an error if transaction reference does not exist", async () => {
+      const invalidTransactionRef = "AN-INALID-TRANSACTION-REF";
+
+      expect(async () => {
+        await client.checkout.verifyTransaction(invalidTransactionRef);
+      }).toThrowError();
     });
   });
 });
