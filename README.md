@@ -39,9 +39,9 @@
     - [Cancel a USSD Transaction](#cancel-a-ussd-transaction)
       - [Parameters](#parameters-7)
       - [Response](#response-2)
-    - [**Initiate a Checkout Transaction**](#initiate-a-checkout-transaction)
-      - [**Parameters**](#parameters-8)
-      - [**Response**](#response-3)
+    - [Initiate a Checkout Transaction](#initiate-a-checkout-transaction)
+      - [Parameters](#parameters-8)
+      - [Response](#response-3)
       - [Response](#response-4)
     - [Verify a Checkout Transaction](#verify-a-checkout-transaction)
   - [Parameters](#parameters-9)
@@ -421,10 +421,10 @@ console.log(response.data);
 ```
 
 
-### **Initiate a Checkout Transaction**  
+### Initiate a Checkout Transaction 
 Initiates a checkout transaction by providing payment details, customer information, and optional metadata.  
 
-#### **Parameters**  
+#### Parameters  
 - `data` (Object): Details of the transaction.  
   - `amount` (Number): The transaction amount.  
   - `paymentReference` (String): A unique identifier for the payment.  
@@ -438,7 +438,7 @@ Initiates a checkout transaction by providing payment details, customer informat
   - `description` (String, optional): A brief description of the transaction.  
   - `metadata` (Object, optional): Additional data related to the transaction.  
 
-#### **Response**  
+#### Response 
 The response includes the following fields:  
 - `paymentReference` (String): The unique identifier for the payment.  
 - `transactionReference` (String): The unique identifier for the transaction.  
@@ -504,6 +504,7 @@ console.log(response.data.status); // "success"
 console.log(response.data.customer.name); // "John Doe"
 
 ```
+
 
 
 
