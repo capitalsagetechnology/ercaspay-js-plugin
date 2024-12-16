@@ -1,6 +1,5 @@
 export interface IInitiateCodeRequest {
   transactionReference: string;
-  amount: number;
   bankName: string;
 }
 
@@ -12,7 +11,5 @@ export interface IInitiateCodeResponse {
   ussdCode: string;
   paymentCode: string;
   amount: number;
+  expires_in: number;
 }
-
-
-
