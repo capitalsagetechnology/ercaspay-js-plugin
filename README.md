@@ -1,12 +1,10 @@
 <!-- img src="./assets/ercaspay.png" alt="Ercaspay Logo" width="200" -->
+
 ![GitHub Header](https://github.com/user-attachments/assets/24c2a49a-393c-46d5-a7f1-0b4994b081a2)
-
-
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
 
 # Table Of Content
-
 
 - [Table Of Content](#table-of-content)
   - [Introduction 🚀](#introduction-)
@@ -18,10 +16,10 @@
     - [Initiate Transfer Method](#initiate-transfer-method)
       - [Example](#example)
   - [Initiates a Card Payment](#initiates-a-card-payment)
-      - [Parameters](#parameters)
-      - [Example](#example-1)
+    - [Parameters](#parameters)
+    - [Example](#example-1)
   - [Submit an OTP](#submit-an-otp)
-      - [Parameters](#parameters-1)
+    - [Parameters](#parameters-1)
     - [Resend an OTP](#resend-an-otp)
       - [Parameters](#parameters-2)
       - [Example](#example-2)
@@ -48,39 +46,35 @@
   - [Response](#response-5)
   - [Example](#example-4)
 
-
 ## Introduction 🚀
 
 Introducing the **Ercaspay** JavaScript SDK: A Hackathon Innovation in Payment Solutions! 💡🏆
-Built during an intense hackathon sprint,Our SDK is built on top of the powerful Ecarspay APIs, providing developers with an intuitive and efficient way to integrate seamless payment solutions into their applications. By leveraging the capabilities of Ecarspay, we’ve designed the SDK to eliminate complexity, enabling faster implementation and a smoother development experience.
+
+Built during an exciting hackathon sprint, our SDK is crafted on top of the powerful Ercaspay APIs to help developers easily integrate payment solutions into their apps. We’ve designed it to be intuitive, efficient, and super easy to use—no more complex setups or long implementation times. With our SDK, you’ll have everything you need to implement payments smoothly and get back to focusing on what matters most—building amazing products. 🚀
 
 ### Why Did We Build This? 🤔
 
-During the hackathon, We discovered developers struggling with complex payment gateway integrations. This SDK is our solution - a game-changing tool that simplifies financial technologies.
+During the hackathon, we saw a common challenge developers face: the complexity of integrating payment gateways. Having worked with payment APIs before, I know how frustrating it can be when there’s no SDK, leaving you to manually test the APIs with tools like Postman just to figure out what responses to expect. And even when an SDK exists, many don’t offer proper typing, making it a guessing game when calling methods or properties.
 
-Motivated by more than just winning, I was deeply impressed by **Ercaspay**  innovative approach. This project became an opportunity to showcase how technology can transform payment integrations, demonstrating our team's technical prowess and creative problem-solving.
-
-The SDK represents our commitment to pushing boundaries in developer tools. Since the hackathon, I've been passionate about sharing this approach, highlighting how innovative solutions can revolutionize payment technology integration.
+That’s why we built this SDK—to solve all of these problems. But we didn’t stop there. We went the extra mile to ensure it’s not just functional but robust and easy to use. We battle-tested our **SDK** with over **70** test suites to ensure reliability and performance under real-world conditions. We also added comprehensive documentation to each and every method and property, so users can start integrating right away—without having to read the docs. As you call a method or access a property, you’ll see all the details you need right in your **IDE**, making it easier than ever to integrate Ercaspay into your projects.
 
 ### Ercaspay Js SDK Features 🚀
 
 Why should you use the **Ercaspay JS SDK** 🤔 ?
 
-- **Effortless Integration:** The Ercaspay Js SDK streamlines the integration process, allowing users to interact with Ercaspay Payment APIs seamlessly.
+- **Effortless Integration:** The Ercaspay JS SDK streamlines the integration process, allowing users to interact with the Ercaspay Payment APIs without the usual hassle. Gone are the days of testing APIs manually in tools like Postman—we’ve made it as easy as calling a method.
 
-- **Accelerated Development:** With simplified methods and enhanced autocompletion, developers can ship their products faster, reducing time-to-market.
+- **Accelerated Development:** With simplified methods, clear type definitions, and enhanced autocompletion, developers can ship their products faster and reduce time-to-market. We’ve taken the guesswork out of the equation, helping you focus more on building and less on debugging.
 
-- **Minimal API Interaction:** Users can achieve robust payment functionalities without directly interacting with the Ercaspay Payment APIs, making development more straightforward.
+- **Minimal API Interaction:** Achieve robust payment functionalities with minimal direct interaction with the APIs. Our SDK abstracts away the complexity, so you can integrate payment features without getting bogged down by API details.
 
-- **Typed Responses:** The Ercaspay Js SDK provides automatic type definitions for API responses, ensuring robust and error-free code. Now, responses are effortlessly typed, offering developers a more structured development experience.
+- **Typed Responses:** Automatic type definitions for API responses ensure your code is both robust and error-free. Responses are now typed out of the box, giving developers a more structured and predictable development experience.
 
-- **TypeScript / JavaScript Autocompletion:** Leverage TypeScript / JavaScript autocompletion for a smoother development process. The SDK seamlessly integrates with TypeScript, enhancing developer productivity by providing accurate suggestions and reducing errors. This also works with JavaScript.
+- **TypeScript / JavaScript Autocompletion:** Whether you're working in TypeScript or JavaScript, our SDK supports autocompletion, making it easier to develop by providing accurate method suggestions and reducing errors. This feature significantly boosts productivity and helps you write more reliable code.
 
-- **Comprehensive JSDoc Support:** Enjoy thorough JSDoc support that enhances code documentation. Developers can benefit from descriptive and comprehensive information right at their fingertips, making it easier to understand and utilize the SDK's capabilities.
+- **Comprehensive JSDoc Support:** Say goodbye to searching for documentation. Our SDK comes with thorough JSDoc support, giving you all the descriptive and actionable information you need right in your IDE, so you can focus on what really matters—building your app.
 
-- **Efficient Error Handling:** The SDK facilitates efficient error handling, providing detailed information for better debugging. Developers can easily identify and resolve issues, ensuring a more reliable integration.
-
-- **Intuitive Webhook Management:** Manage webhook transactions effortlessly. The SDK introduces clear methods for retrieving and deleting webhook error logs, ensuring a smooth and error-free webhook integration.
+- **Efficient Error Handling:** Error handling is a breeze with the Ercaspay JS SDK. It provides clear, detailed error messages, making it easier for developers to troubleshoot and resolve issues quickly, ensuring a smoother integration.
 
 These enhancements aim to provide developers with a more powerful, flexible, and enjoyable experience when integrating [Ercaspay Payment APIs](https://ercaspay.com/) into their applications.
 
@@ -92,118 +86,148 @@ To install the **SDK** in your application, you can install using `npm, yarn, pn
 
 ```bash
 
-npm install @ercaspay/js
+npm install ercaspay-sdk
 
 ```
 
 **Yarn**
 
 ```bash
-yarn add @ercaspay/js
+yarn add ercaspay-sdk
 
 ```
 
 **Bun**
 
 ```bash
-bun add @ercaspay/js
+bun add ercaspay-sdk
 
 ```
-
 
 ## Usage 🚦
 
-Though **Ercaspay Js SDK** provides easy methods that can be used even without reading documentation, I will still do my best to explain each **SDK** method. To use the **Ercaspay JS SDK**. You've to import the **ErcaspayClient** from the **@ercaspay/js** package. That class provides the interface to work with the **SDK**.
+While the Ercaspay JS SDK is designed to be intuitive and easy to use (so you can start integrating without even opening the docs!), I’ll still walk you through each key SDK method to make sure you’re equipped with all the details.
+
+To get started with the Ercaspay JS SDK, you first need to import the ErcaspayClient from the `ercaspay-sdk` package. This class is your gateway to the SDK, providing all the methods you need to interact with the Ercaspay Payment APIs.
 
 ```typescript
-import ErcaspayClient from "@ercaspay/js";
+import { ErcaspayClient } from "ercaspay-sdk";
 ```
 
-Then we create a new instance of the **ErcaspayClient** which allows us to interact with the the methods in the **ErcaspayClient**. It takes 3 arguments.
+Then we create a new instance of the **ErcaspayClient** which allows us to interact with the the methods in the **ErcaspayClient**. It takes 2 arguments.
 
-1. The Ercaspay Public Key
-2. The Ercaspay Private Key
-3. The Environment.
+1. The Ercaspay Secret Key
+2. The Environment. (Optional, defaults to `development`)
 
-The Public and Private Key can be gotten from the **Ercaspay** website. <https://sandbox.ercaspay.com/sign-up> or <https://merchant.ercaspay.com/sign-up>
+The Secret Key can be gotten from the **Ercaspay** website. <https://sandbox.ercaspay.com/sign-up> or <https://merchant.ercaspay.com/sign-up>
 
 ```typescript
 const ercaspay = new ErcaspayClient(
-  process.env.ERCASPAY_PUBLIC_KEY as string,
-  process.env.ERCASPAY_PRIVATE_KEY as string,
+  process.env.ERCASPAY_SECRET_KEY as string,
   process.env.NODE_ENV as string
 );
 ```
 
 ### SDK Typed Response
 
-The **SDK** provides **typed responses** for every method call. There is always a base response object for every method call. With this, you can determine the status of each method call, the response type (success or fail)
-and the response message, just like a traditional **API** call. This is useful so that you can catch errors easily and also know the status of each method call so you can tailor your application to respond accordingly.
+The **SDK** provides **typed responses** for every method call, ensuring that you get consistent and structured data with every interaction. The base response object contains key information, including the request status, response code, error message or response message (if applicable), and the actual data returned from the API. With clear response data, you can tailor your application’s behavior based on the success or failure of an operation—allowing you to respond appropriately and handle errors efficiently.
 
 ```typescript
-export interface BaseResponseProps {
-  status: number;
-  success: boolean;
-  message: string;
-  data?: {};
+/**
+ * Represents a base response structure for API requests.
+ * @template TResponse - The type of the response body.
+ */
+export interface IBaseResponse<TResponse> {
+  /**
+   * Indicates whether the request was successful.
+   * @type {boolean}
+   */
+  requestSuccessful: boolean;
+
+  /**
+   * A code representing the status of the response (e.g., success, error).
+   * @type {string}
+   */
+  responseCode: string;
+
+  /**
+   * A message providing additional details on the response, typically used for errors.
+   * @type {string}
+   */
+  errorMessage?: string;
+
+  /**
+   * A message providing additional details on the response, typically used for success response.
+   * @type {string}
+   */
+  responseMessage?: string;
+
+  /**
+   * The actual data returned in the response.
+   * @type {TResponse}
+   */
+  responseBody: TResponse;
 }
 ```
 
-So from every method call, I can determine the method status, if it successful, the message and the data returned from the method.
-
-Assuming that we want to initiate a payment, once we call the `initiateTransfer` method, we can get the `typed response` directly from the variable the method call was assigned to. We can then redirect the user to the payment page is the method returns a success response.
-
+Let’s assume you’re initiating a payment using the `checkout.initiateTransaction` method. When you call this method, it returns a typed response that you can directly assign to a variable. This response includes crucial details, such as the success status, response message, and any additional data returned by the API.
 
 ```typescript
+import { ErcaspayClient } from "ercaspay-sdk";
 
-const response = await Ercaspay.initializeTransfer({
-  status: "success",
-  gatewayMessage: "Payment initialization successful",
-  transactionReference: "Ercaspay_TX_123456789",
-  amount: 20000,
-  accountNumber: "0123456789",
-  accountEmail: "teamgodspeed@gmail.com",
-  accountName: "Adedoyin Emmanuel Adeniyi",
-  accountReference: "USER_REF_001",
-  bankName: "Wema Bank",
-  expires_in: 3600, // Expires in 1 hour (3600 seconds)
+const ercaspay = new ErcaspayClient(
+  process.env.ERCASPAY_SECRET_KEY as string,
+  process.env.NODE_ENV as string
+);
+
+const response = await ercaspay.checkout.initializeTransfer({
+  amount: 10000,
+  paymentReference: "R5md7gd9b4s3h2j5d67g",
+  paymentMethods: "card,bank-transfer,ussd,qrcode",
+  customerName: "Adedoyin Emmanuel",
+  customerEmail: "hi@adedoyinemmanuel.dev",
+  customerPhoneNumber: "09061626364",
+  redirectUrl: "https://github.com/adedoyin-emmanuel",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  currency: "NGN",
+  feeBearer: "customer",
+  metadata: {
+    firstname: "Temi",
+    lastname: "Girl",
+    email: "temigirl@mail.com",
+  },
 });
-
-
 
 // check if the response was successful, if not, return a response to the client.
 
-if(!response.success)
-  return res.status(response.status).json({message:response.message});
+if (!response.requestSuccessful)
+  return res.status(response.status).json({ message: response.message });
 
 // Response was successful, I can now get the checkout_url
 
-const checkoutUrl = response.data.checkout_url;
+const checkoutUrl = response.responseBody.transactionReference;
 
 // redirect the client to the checkout_url
 
 res.redirect(checkoutUrl); // assuming you are using express JS
 ```
 
-
 ### Initiate Transfer Method
 
 To initiate a transfer, you'll need to make a call to our API with a payload that adheres to the `initializeTransfer interface`. This interface defines the following properties:
 
-
-| Property | Description |
-|---|---|
-| `status` | The status of the transaction (e.g., "success", "pending", "failed") |
-| `gatewayMessage` | A message from the gateway about the transaction |
-| `transactionReference` | A unique reference for the transaction |
-| `amount` | The amount to be transferred |
-| `accountNumber` | The account number for the transfer |
-| `accountEmail` | The email address associated with the account |
-| `accountName` | The name of the account holder |
-| `accountReference` | A reference for the transaction |
-| `bankName` | The name of the bank |
-| `expires_in` | The number of seconds the transaction link will be valid |
-
+| Property               | Description                                                          |
+| ---------------------- | -------------------------------------------------------------------- |
+| `status`               | The status of the transaction (e.g., "success", "pending", "failed") |
+| `gatewayMessage`       | A message from the gateway about the transaction                     |
+| `transactionReference` | A unique reference for the transaction                               |
+| `amount`               | The amount to be transferred                                         |
+| `accountNumber`        | The account number for the transfer                                  |
+| `accountEmail`         | The email address associated with the account                        |
+| `accountName`          | The name of the account holder                                       |
+| `accountReference`     | A reference for the transaction                                      |
+| `bankName`             | The name of the bank                                                 |
+| `expires_in`           | The number of seconds the transaction link will be valid             |
 
 #### Example
 
@@ -220,9 +244,8 @@ const response = await Ercaspay.IntitializeTransfer({
   bankName: "Wema Bank",
   expires_in: 3600, // Expires in 1 hour (3600 seconds)
 });
-
-
 ```
+
 As you know, the SDK comes with `Typed Responses` which means automatic type definitions for API responses. You can easily redirect the user to the checkout url
 
 ```typescript
@@ -261,16 +284,15 @@ const response = await ercaspayCard.initiatePayment({
           language: "en-US",
           screenHeight: 1080,
           screenWidth: 1920,
-          timeZone: -60
+          timeZone: -60,
         },
-        ipAddress: "192.168.1.1"
-      }
-    }
-  }
+        ipAddress: "192.168.1.1",
+      },
+    },
+  },
 });
-
-
 ```
+
 ## Submit an OTP
 
 Authenticates a transaction by submitting the OTP sent to the customer.
@@ -282,15 +304,15 @@ Authenticates a transaction by submitting the OTP sent to the customer.
   - `otp` (String): The one-time password received by the customer.
   - `gatewayReference` (Object): A unique reference returned during payment initialization.
   - `transactionReference` (Object):A unique identifier for the transaction.
-- 
+
+-
 
 ```typescript
 const response = await ercaspayCard.submitOTP({
   otp: "123456",
   gatewayReference: "gw_123456",
-  transactionReference: "txn_123456789"
+  transactionReference: "txn_123456789",
 });
-
 ```
 
 ### Resend an OTP
@@ -309,9 +331,8 @@ Requests a new OTP for a transaction when the initial OTP is not received or has
 ```typescript
 const response = await ercaspayCard.resendOTP({
   gatewayReference: "gw_123456",
-  transactionReference: "txn_123456789"
+  transactionReference: "txn_123456789",
 });
-
 ```
 
 ### Get Transaction Details
@@ -320,7 +341,7 @@ Retrieves information about a specific transaction using its reference.
 
 #### Parameters
 
- - `transactionReference` (Object):A unique identifier for the transaction.
+- `transactionReference` (Object):A unique identifier for the transaction.
 
 #### Example
 
@@ -330,7 +351,6 @@ const response = await ercaspayCard.getDetails("txn_123456789");
 
 ### Verify Transaction
 
-
 Checks the status of a transaction to ensure it has been successfully completed.
 
 #### Parameters
@@ -339,12 +359,11 @@ Checks the status of a transaction to ensure it has been successfully completed.
 
 ```typescript
 const response = await ercaspayCard.verifyTransaction("txn_123456789");
-
 ```
+
 ### Initiate a USSD Code Request
 
 Generates a USSD code for making payments by providing transaction details and the bank name.
-
 
 #### Parameters
 
@@ -354,8 +373,8 @@ Generates a USSD code for making payments by providing transaction details and t
   - `amount` (Number):The transaction amount.
   - `bankName` (String):The name of the bank selected for payment.
 
-
 #### Response
+
 The response includes the following fields:
 
 - `status` (String): The status of the operation (e.g., "success").
@@ -367,13 +386,11 @@ The response includes the following fields:
 - `amount` (Number): The transaction amount.
 
 ```typescript
-
 const response = await ercaspayUSSD.initiateCode({
   transactionReference: "txn_123456789",
   amount: 10000,
-  bankName: "First Bank"
+  bankName: "First Bank",
 });
-
 ```
 
 ### Get Supported Bank List
@@ -388,12 +405,9 @@ None
 
 An array of strings representing the names of the supported banks.
 
-
 ```typescript
 const response = await ercaspayUSSD.getBankList();
 console.log(response.data); // ["First Bank", "GTBank", "Access Bank", ...]
-
-
 ```
 
 ### Cancel a USSD Transaction
@@ -408,43 +422,44 @@ Cancels an ongoing USSD transaction using its reference.
 
 The response may include details about the cancellation status, such as:
 
-
-- `status` (String):  Indicates whether the transaction was successfully canceled.
-- `gatewayMessage` (String):  Message from the payment gateway regarding the cancellation.
+- `status` (String): Indicates whether the transaction was successfully canceled.
+- `gatewayMessage` (String): Message from the payment gateway regarding the cancellation.
 - `transactionReference` (String): The reference of the transaction being canceled.
-
 
 ```typescript
 const response = await ercaspayUSSD.cancel("txn_123456789");
 console.log(response.data);
-
 ```
 
+### Initiate a Checkout Transaction
 
-### Initiate a Checkout Transaction 
-Initiates a checkout transaction by providing payment details, customer information, and optional metadata.  
+Initiates a checkout transaction by providing payment details, customer information, and optional metadata.
 
-#### Parameters  
-- `data` (Object): Details of the transaction.  
-  - `amount` (Number): The transaction amount.  
-  - `paymentReference` (String): A unique identifier for the payment.  
-  - `paymentMethods` (String): Accepted payment methods (e.g., "card", "bank").  
-  - `customerName` (String): The full name of the customer.  
-  - `customerEmail` (String): The email address of the customer.  
-  - `customerPhoneNumber` (String, optional): The phone number of the customer.  
-  - `currency` (String): The transaction currency (e.g., "NGN", "USD").  
-  - `feeBearer` (String, optional): Indicates who bears the transaction fee (`"customer"` or `"merchant"`).  
-  - `redirectUrl` (String, optional): The URL to redirect the user after payment.  
-  - `description` (String, optional): A brief description of the transaction.  
-  - `metadata` (Object, optional): Additional data related to the transaction.  
+#### Parameters
 
-#### Response 
-The response includes the following fields:  
-- `paymentReference` (String): The unique identifier for the payment.  
-- `transactionReference` (String): The unique identifier for the transaction.  
-- `checkoutUrl` (String): The URL to complete the payment process.  
+- `data` (Object): Details of the transaction.
+  - `amount` (Number): The transaction amount.
+  - `paymentReference` (String): A unique identifier for the payment.
+  - `paymentMethods` (String): Accepted payment methods (e.g., "card", "bank").
+  - `customerName` (String): The full name of the customer.
+  - `customerEmail` (String): The email address of the customer.
+  - `customerPhoneNumber` (String, optional): The phone number of the customer.
+  - `currency` (String): The transaction currency (e.g., "NGN", "USD").
+  - `feeBearer` (String, optional): Indicates who bears the transaction fee (`"customer"` or `"merchant"`).
+  - `redirectUrl` (String, optional): The URL to redirect the user after payment.
+  - `description` (String, optional): A brief description of the transaction.
+  - `metadata` (Object, optional): Additional data related to the transaction.
 
 #### Response
+
+The response includes the following fields:
+
+- `paymentReference` (String): The unique identifier for the payment.
+- `transactionReference` (String): The unique identifier for the transaction.
+- `checkoutUrl` (String): The URL to complete the payment process.
+
+#### Response
+
 The response includes the following fields:
 
 ```typescript
@@ -465,14 +480,16 @@ const response = await ercaspayCheckout.initiateTransaction({
 console.log(response.data.checkoutUrl);
 ```
 
-
 ### Verify a Checkout Transaction
+
 Verifies the status of a checkout transaction using its transaction reference.
 
 ## Parameters
+
 - `transactionReference` (String): The unique identifier for the transaction to be verified.
 
 ## Response
+
 The response includes details about the transaction:
 
 - `domain` (String): The transaction domain.
@@ -502,10 +519,4 @@ const response = await ercaspayCheckout.verifyTransaction("txn_987654321");
 
 console.log(response.data.status); // "success"
 console.log(response.data.customer.name); // "John Doe"
-
 ```
-
-
-
-
-
