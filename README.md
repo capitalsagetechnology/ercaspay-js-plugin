@@ -18,6 +18,8 @@
       - [Example](#example-1)
     - [ErcaspayCard Class](#ercaspaycard-class)
     - [Ercaspay Bankransfer Class](#ercaspay-bankransfer-class)
+    - [Ercaspay USSD Class](#ercaspay-ussd-class)
+    - [Ercaspay Transaction Class](#ercaspay-transaction-class)
 
 ## Introduction 🚀
 
@@ -713,5 +715,379 @@ export interface IIntitializeTransferResponse {
    * @type {number}
    */
   expires_in: number;
+}
+```
+
+### Ercaspay USSD Class
+
+The ErcaspayUSSD class is part of the Ercaspay SDK and provides methods for initiating USSD codes, fetching a list of supported banks, and canceling USSD transactions.
+
+**Methods**
+
+1. `initiateCode(data)`: Initiates a USSD code for a specific transaction reference. The method requires transaction details such as the transaction reference and bank name to be sent as part of the request. The input data is validated, and if successful, a USSD code is returned for completing the transaction.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20230418155255|1681833175587831";
+const response = await ercaspay.ussd.initiateCode({
+  bankName: "gtbank",
+  transactionReference: transactionRef,
+});
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for initiating a code for a transaction.
+ */
+export interface IInitiateCodeResponse {
+  /**
+   * The status of the initiation request (e.g., success, failure).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * The message provided by the gateway regarding the transaction initiation.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * The unique transaction reference associated with the initiation.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * A unique reference provided by the gateway for tracking the transaction.
+   * @type {string}
+   */
+  gatewayReference: string;
+
+  /**
+   * The USSD code used for the transaction.
+   * @type {string}
+   */
+  ussdCode: string;
+
+  /**
+   * The payment code used for the transaction.
+   * @type {string}
+   */
+  paymentCode: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The time in seconds until the code expires.
+   * @type {number}
+   */
+  expires_in: number;
+}
+```
+
+2. `getBankList()`: Fetches the list of supported banks for USSD transactions. This method retrieves the banks that are available for initiating USSD transactions via the Ercaspay system.
+
+**Example**
+
+```typescript
+const response = await ercaspay.ussd.getBankList();
+```
+
+**Typed Response**
+
+```typescript
+[
+  "access",
+  "alat",
+  "ecobank",
+  "FCMB",
+  "fidelity",
+  "firstbank",
+  "gtbank",
+  "heritage",
+  "keystone",
+  "polaris",
+  "stanbic",
+  "sterling",
+  "uba",
+  "union",
+  "unity",
+  "wema",
+  "zenith",
+];
+```
+
+### Ercaspay Transaction Class
+
+This class provides methods to interact with the transaction-related endpoints in the Ercaspay system. It includes methods to fetch transaction details, verify transactions, check transaction status, cancel transactions, and initiate new transactions.
+
+**Methods**
+
+1. `getDetails(transactionReference)`: Retrieve the details of a specific transaction using its unique reference.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20231113082706|1699860426792";
+const response = await ercaspay.transaction.getDetails(transactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for fetching transaction details.
+ */
+export interface IGetTransactionDetailsResponse {
+  /**
+   * The name of the customer involved in the transaction.
+   * @type {string}
+   */
+  customerName: string;
+
+  /**
+   * The email address of the customer involved in the transaction.
+   * @type {string}
+   */
+  customerEmail: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The business name associated with the transaction.
+   * @type {string}
+   */
+  businessName: string;
+
+  /**
+   * The business logo associated with the transaction.
+   * @type {string}
+   */
+  businessLogo: string;
+
+  /**
+   * The white-label configuration associated with the transaction.
+   * @type {IWhiteLabel}
+   */
+  whiteLabel: IWhiteLabel;
+
+  /**
+   * The payment methods available for the transaction.
+   * @type {string[]}
+   */
+  paymentMethods: string[];
+}
+```
+
+2. `verify(transactionReference)`: Verifies the status of a specific transaction using its unique reference.
+
+**Example**
+
+```typescript
+const validTransactionRef = "ERCS|20241216085942|1734335982170";
+const response = await ercaspay.transaction.verify(validTransactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for verifying a transaction.
+ */
+export interface IVerifyTransactionResponse
+  extends IVerifyCheckoutTransactionResponse {}
+```
+
+3. `getStatus(data)`: Fetches the status of a transaction using the provided data (payment method and transaction reference).
+
+**Example**
+
+```typescript
+const validTransactionRef = "ERCS|20241215043712|1734233832822";
+
+const response = await ercaspay.transaction.getStatus({
+  transactionReference: validTransactionRef,
+  paymentMethod: "card",
+  reference: "P1vpu4GwRb3i1MP",
+});
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for fetching the status of a transaction.
+ */
+export interface IGetTransactionStatusResponse {
+  /**
+   * A unique payment reference for the transaction.
+   * @type {string}
+   */
+  paymentReference: string;
+
+  /**
+   * The amount of money involved in the transaction.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The status of the transaction (e.g., pending, completed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A description of the transaction status.
+   * @type {string}
+   */
+  description: string;
+
+  /**
+   * The URL to call back after the transaction status is fetched.
+   * @type {string}
+   */
+  callbackUrl: string;
+}
+```
+
+4. `cancel(transactionReference)`: Cancels a specific transaction using its reference.
+
+**Example**
+
+```typescript
+const transactionRef = "ERCS|20241215043712|1734233832822";
+
+const response = await client.transaction.cancel(transactionRef);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure for canceling a transaction.
+ */
+export interface ICancelTransactionResponse {
+  /**
+   * The URL to call back after canceling the transaction.
+   * @type {string}
+   */
+  callback_url: string;
+}
+```
+
+5. `initiate(data)`: Initiates a new transaction with the given data.
+
+**Example**
+
+```typescript
+const response = await ercaspay.transaction.initiate({
+  amount: 10000,
+  paymentReference: "R5md7gd9b4s3h2j5d67g",
+  paymentMethods: "card,bank-transfer,ussd,qrcode",
+  customerName: "Adedoyin Emmanuel",
+  customerEmail: "hi@adedoyinemmanuel.dev",
+  customerPhoneNumber: "09061626364",
+  redirectUrl: "https://github.com/adedoyin-emmanuel",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  currency: "NGN",
+  feeBearer: "customer",
+  metadata: {
+    firstname: "Temi",
+    lastname: "Girl",
+    email: "temigirl@mail.com",
+  },
+});
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure after initiating a transaction.
+ */
+export interface IInitiateTransactionResponse {
+  /**
+   * A unique payment reference for the transaction.
+   * @type {string}
+   */
+  paymentReference: string;
+
+  /**
+   * A unique transaction reference for the initiated transaction.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * A URL to the checkout page for the transaction.
+   * @type {string}
+   */
+  checkoutUrl: string;
+
+  /**
+   * The white-label configuration associated with the transaction.
+   * @type {IWhiteLabel}
+   */
+  whiteLabel: IWhiteLabel;
+}
+
+/**
+ * Represents the white-label configuration for the transaction system.
+ */
+export interface IWhiteLabel {
+  /**
+   * The unique identifier for the white-label configuration.
+   * @type {number}
+   */
+  id: number;
+
+  /**
+   * The URL of the logo to be displayed for the white-label brand.
+   * @type {string}
+   */
+  logo_url: string;
+
+  /**
+   * The primary color associated with the white-label branding.
+   * @type {string}
+   */
+  primary_color: string;
+
+  /**
+   * The accent color associated with the white-label branding.
+   * @type {string}
+   */
+  accent_color: string;
+
+  /**
+   * The font family used in the white-label branding.
+   * @type {string}
+   */
+  font_family: string;
+
+  /**
+   * The font color used in the white-label branding.
+   * @type {string}
+   */
+  font_color: string;
+
+  /**
+   * Indicates whether the white-label configuration has been approved by an admin.
+   * @type {string}
+   */
+  has_admin_approved: string;
 }
 ```
