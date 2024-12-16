@@ -16,7 +16,8 @@
     - [ErcaspayCheckout Class](#ercaspaycheckout-class)
       - [Example](#example)
       - [Example](#example-1)
-    - [ErcaspayCard Class Documentation](#ercaspaycard-class-documentation)
+    - [ErcaspayCard Class](#ercaspaycard-class)
+    - [Ercaspay Bankransfer Class](#ercaspay-bankransfer-class)
 
 ## Introduction 🚀
 
@@ -374,7 +375,7 @@ export interface ICustomer {
 }
 ```
 
-### ErcaspayCard Class Documentation
+### ErcaspayCard Class
 
 This class handles card-related payment flows for the Ercaspay system. It supports initiating payments, submitting and resending OTPs, retrieving transaction details, and verifying transactions.
 
@@ -626,4 +627,91 @@ const response = await ercaspay.card.verifyTransaction(transactionReference);
  * Represents the response structure for verifying a card transaction.
  */
 export interface IVerifyCardTransactionResponse {}
+```
+
+### Ercaspay Bankransfer Class
+
+The `ErcaspayBankTransfer` class is part of the Ercaspay SDK and handles the initiation of bank transfer payment flows. This class extends from the base ErcaspayBase class and provides functionality to interact with bank transfer payment-related API endpoints.
+
+**Methods**
+
+1. `initializeTransfer(transactionReference: string)`: Initializes a bank transfer transaction by requesting the necessary details for a specific transaction reference. The method checks if the provided reference is valid, then makes an API request to retrieve the bank account details and status for the transaction.
+
+**Example**
+
+```typescript
+const transactionReference = "ERCS|20241216175111|1734367871284";
+
+const response = await ercaspay.bankTransfer.initializeTransfer(
+  transactionReference
+);
+```
+
+**Typed Response**
+
+```typescript
+/**
+ * Represents the response structure after initializing a transfer.
+ */
+export interface IIntitializeTransferResponse {
+  /**
+   * The status of the transfer (e.g., success, failed).
+   * @type {string}
+   */
+  status: string;
+
+  /**
+   * A message from the gateway providing additional details about the transfer status.
+   * @type {string}
+   */
+  gatewayMessage: string;
+
+  /**
+   * A unique reference for the transaction.
+   * @type {string}
+   */
+  transactionReference: string;
+
+  /**
+   * The amount of money to be transferred.
+   * @type {number}
+   */
+  amount: number;
+
+  /**
+   * The account number to which the transfer will be made.
+   * @type {string}
+   */
+  accountNumber: string;
+
+  /**
+   * The email address associated with the account receiving the transfer.
+   * @type {string}
+   */
+  accountEmail: string;
+
+  /**
+   * The name of the account holder receiving the transfer.
+   * @type {string}
+   */
+  accountName: string;
+
+  /**
+   * A unique reference for the account involved in the transfer.
+   * @type {string}
+   */
+  accountReference: string;
+
+  /**
+   * The name of the bank handling the transfer.
+   * @type {string}
+   */
+  bankName: string;
+
+  /**
+   * The time in seconds until the transfer expires.
+   * @type {number}
+   */
+  expires_in: number;
+}
 ```
