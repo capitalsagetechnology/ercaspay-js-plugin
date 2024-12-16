@@ -9,7 +9,7 @@ export default class ErcaspayBankTransfer extends ErcaspayBase {
       throw new Error("Transaction reference is required");
     }
 
-    const response = await this.Axios.post<
+    const response = await this.Axios.get<
       IBaseResponse<IIntitializeTransferResponse>
     >(
       `${this.bankTransferBaseUrl}/request-bank-account/${transactionReference}`
