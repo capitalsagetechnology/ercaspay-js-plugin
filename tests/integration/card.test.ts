@@ -70,4 +70,20 @@ describe("Card Module Test 🧪", () => {
       });
     });
   });
+
+  describe("Verify Card Transaction", async () => {
+    it("Should return a 200 status code, with appropriate typed response", async () => {
+      /**
+       * TODO
+       */
+    });
+
+    it("Should throw an error if transaction reference", async () => {
+      expect(async () => {
+        await client.card.verifyTransaction(
+          "ERCS|20241216064129|1734327689500"
+        );
+      });
+    });
+  });
 });
