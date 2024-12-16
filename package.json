@@ -12,6 +12,14 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
+  "keywords": [
+    "ercaspay",
+    "ercaspay-sdk",
+    "payment",
+    "payment-gateway",
+    "payment-solution",
+    "payment-integration"
+  ],
   "files": [
     "dist/**/*"
   ],

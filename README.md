@@ -1,6 +1,4 @@
-<!-- img src="./assets/ercaspay.png" alt="Ercaspay Logo" width="200" -->
-
-![GitHub Header](https://github.com/user-attachments/assets/24c2a49a-393c-46d5-a7f1-0b4994b081a2)
+![GitHub Header](/assets/header.png)
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
 
