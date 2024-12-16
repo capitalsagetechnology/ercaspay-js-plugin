@@ -39,16 +39,20 @@
     - [Cancel a USSD Transaction](#cancel-a-ussd-transaction)
       - [Parameters](#parameters-7)
       - [Response](#response-2)
-    - [**Initiate a Checkout Transaction**](#initiate-a-checkout-transaction)
-      - [**Parameters**](#parameters-8)
-      - [**Response**](#response-3)
+    - [Initiate a Checkout Transaction](#initiate-a-checkout-transaction)
+      - [Parameters](#parameters-8)
+      - [Response](#response-3)
       - [Response](#response-4)
+    - [Verify a Checkout Transaction](#verify-a-checkout-transaction)
+  - [Parameters](#parameters-9)
+  - [Response](#response-5)
+  - [Example](#example-4)
 
 
 ## Introduction 🚀
 
 Introducing the **Ercaspay** JavaScript SDK: A Hackathon Innovation in Payment Solutions! 💡🏆
-Built during an intense hackathon sprint, this SDK revolutionizes payment integration for developers, offering a streamlined, chainable interface that simplifies how applications connect with **Ercaspay** payment ecosystem. Crafted with passion and innovation by Team Godspeed.
+Built during an intense hackathon sprint,Our SDK is built on top of the powerful Ecarspay APIs, providing developers with an intuitive and efficient way to integrate seamless payment solutions into their applications. By leveraging the capabilities of Ecarspay, we’ve designed the SDK to eliminate complexity, enabling faster implementation and a smoother development experience.
 
 ### Why Did We Build This? 🤔
 
@@ -417,10 +421,10 @@ console.log(response.data);
 ```
 
 
-### **Initiate a Checkout Transaction**  
+### Initiate a Checkout Transaction 
 Initiates a checkout transaction by providing payment details, customer information, and optional metadata.  
 
-#### **Parameters**  
+#### Parameters  
 - `data` (Object): Details of the transaction.  
   - `amount` (Number): The transaction amount.  
   - `paymentReference` (String): A unique identifier for the payment.  
@@ -434,7 +438,7 @@ Initiates a checkout transaction by providing payment details, customer informat
   - `description` (String, optional): A brief description of the transaction.  
   - `metadata` (Object, optional): Additional data related to the transaction.  
 
-#### **Response**  
+#### Response 
 The response includes the following fields:  
 - `paymentReference` (String): The unique identifier for the payment.  
 - `transactionReference` (String): The unique identifier for the transaction.  
@@ -460,3 +464,48 @@ const response = await ercaspayCheckout.initiateTransaction({
 
 console.log(response.data.checkoutUrl);
 ```
+
+
+### Verify a Checkout Transaction
+Verifies the status of a checkout transaction using its transaction reference.
+
+## Parameters
+- `transactionReference` (String): The unique identifier for the transaction to be verified.
+
+## Response
+The response includes details about the transaction:
+
+- `domain` (String): The transaction domain.
+- `status` (String): The status of the transaction (e.g., "success", "failed").
+- `ercs_reference` (String): The unique reference returned by the payment gateway.
+- `tx_reference` (String): The transaction reference.
+- `amount` (Number): The transaction amount.
+- `description` (String): A brief description of the transaction.
+- `paid_at` (String): The timestamp when the payment was completed.
+- `created_at` (String): The timestamp when the transaction was initiated.
+- `channel` (String): The payment channel used (e.g., "card", "bank").
+- `currency` (String): The transaction currency.
+- `metadata` (Object, optional): Additional data related to the transaction.
+- `fee` (Number): The transaction fee.
+- `fee_bearer` (String): Who bears the transaction fee ("customer" or "merchant").
+- `settled_amount` (Number): The amount settled after deducting fees.
+- `customer` (Object): Customer details.
+  - `name` (String): The customer's full name.
+  - `email` (String): The customer's email address.
+  - `phone_number` (String, optional): The customer's phone number.
+  - `reference` (String): A unique reference for the customer.
+
+## Example
+
+```typescript
+const response = await ercaspayCheckout.verifyTransaction("txn_987654321");
+
+console.log(response.data.status); // "success"
+console.log(response.data.customer.name); // "John Doe"
+
+```
+
+
+
+
+
