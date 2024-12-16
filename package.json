@@ -1,5 +1,6 @@
 {
   "name": "ercaspay-sdk",
+  "version": "1.0.0",
   "description": "Seamlessly integrate Ecarspay's robust payment solutions with the battle-tested JavaScript SDK—featuring typed responses, JSDoc support, and in-editor documentation for a developer-friendly experience.",
   "main": "./dist/index.js",
   "devDependencies": {
