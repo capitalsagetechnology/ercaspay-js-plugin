@@ -14,8 +14,6 @@
   - [Usage 🚦](#usage-)
     - [SDK Typed Response](#sdk-typed-response)
     - [ErcaspayCheckout Class](#ercaspaycheckout-class)
-      - [Example](#example)
-      - [Example](#example-1)
     - [ErcaspayCard Class](#ercaspaycard-class)
     - [Ercaspay Bankransfer Class](#ercaspay-bankransfer-class)
     - [Ercaspay USSD Class](#ercaspay-ussd-class)
@@ -195,7 +193,7 @@ The `ErcaspayCheckout` class is part of the Ercaspay JS SDK and provides methods
 
 1. `initiateTransaction`: Initiates a checkout transaction on the ErcasPay platform. The method first validates the input data using a predefined schema, and then it sends a request to initiate the transaction.
 
-#### Example
+**Example**
 
 ```typescript
 const response = await ercaspay.checkout.initiateTransaction({
@@ -241,7 +239,7 @@ checkoutUrl: string;
 
 2. `verifyTransaction`: Verifies the status of a checkout transaction using its unique reference. This is useful for checking if a transaction has been successfully completed.
 
-#### Example
+**Example**
 
 ```typescript
 const validTransactionRef = "ERCS|20241214214035|1734208835283";
