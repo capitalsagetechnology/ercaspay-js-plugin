@@ -8,7 +8,6 @@ import type {
   IResendOTPRequest,
   IResendOTPResponse,
   IGetCardDetailsResponse,
-  IVerifyCardTransactionResponse,
 } from "./interfaces";
 import {
   cardSchema,
