@@ -46,4 +46,13 @@ describe("USSD Module Test 🧪", () => {
       expect(response.responseBody.expires_in).toBeNumber();
     });
   });
+
+  describe("Get Bank List For USSD", async () => {
+    it("Should return a 200 status code, with appropriate typed response", async () => {
+      const response = await client.ussd.getBankList();
+      expect(response.requestSuccessful).toBeTrue();
+      expect(response.responseBody).not.toBeEmpty();
+      expect(response.responseBody).toBeArray();
+    });
+  });
 });
