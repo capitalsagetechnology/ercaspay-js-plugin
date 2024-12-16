@@ -19,7 +19,13 @@ export interface IBaseResponse<TResponse> {
    * A message providing additional details on the response, typically used for errors.
    * @type {string}
    */
-  errorMessage: string;
+  errorMessage?: string;
+
+  /**
+   * A message providing additional details on the response, typically used for success response.
+   * @type {string}
+   */
+  responseMessage?: string;
 
   /**
    * The actual data returned in the response.
