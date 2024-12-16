@@ -83,4 +83,26 @@ describe("Transaction Module Test 🧪", () => {
       expect(response.responseBody.description).toBeString();
     });
   });
+
+  describe("Verify Transaction", async () => {
+    it("Should verify a transaction and return a 200 status code, with appropriate typed response", async () => {
+      const validTransactionRef = "ERCS|20241216085942|1734335982170";
+      const response = await client.transaction.verify(validTransactionRef);
+
+      expect(response.requestSuccessful).toBeTrue();
+      expect(response.responseBody).toBeObject();
+      expect(response.responseBody.amount).toBeNumber();
+      expect(response.responseBody.currency).toBeString();
+      expect(response.responseBody.status).toBeString();
+      expect(response.responseBody.customer).toBeObject();
+      expect(response.responseBody.fee).toBeNumber();
+      expect(response.responseBody.settled_amount).toBeNumber();
+      expect(response.responseBody.tx_reference).toBeString();
+      expect(response.responseBody.domain).toBeString();
+      expect(response.responseBody.paid_at).toBeString();
+      expect(response.responseBody.created_at).toBeString();
+      expect(response.responseBody.channel).toBeString();
+      expect(response.responseBody.ercs_reference).toBeString();
+    });
+  });
 });

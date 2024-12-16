@@ -37,7 +37,7 @@ export default class ErcaspayTransaction extends ErcaspayBase {
 
     const response = await this.Axios.get<
       IBaseResponse<IVerifyTransactionResponse>
-    >(`${this.transactionBaseUrl}/verify/${transactionRef}`);
+    >(`${this.transactionBaseUrl}/transaction/verify/${transactionRef}`);
 
     return response.data;
   }
