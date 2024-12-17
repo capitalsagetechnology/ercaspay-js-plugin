@@ -2,11 +2,13 @@
 
 **Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
 
-[Our Presentation Slides](https://docs.google.com/presentation/d/1sULf_oTw_Na7RITZjlCxObEcCLXYJHUkC7uZQ2Amixg/edit#slide=id.g31fdb22fe15_0_6)
+[View our Presentation Slides](https://docs.google.com/presentation/d/1sULf_oTw_Na7RITZjlCxObEcCLXYJHUkC7uZQ2Amixg/edit#slide=id.g31fdb22fe15_0_6)
 
-[Our Hackathon Experience](https://adedoyin.hashnode.dev/ercaspay-hackathon-experience)
+[Read our Hackathon Experience](https://adedoyin.hashnode.dev/ercaspay-hackathon-experience)
 
 [View Package On NPM](https://www.npmjs.com/package/ercaspay-sdk)
+
+[View Out Dotnet SDK](https://github.com/Adedoyin-Emmanuel/ercaspay-dotnet-sdk)
 
 # Table Of Content
 
