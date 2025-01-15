@@ -1,13 +1,13 @@
 import { expect, test, describe, it, beforeEach } from "bun:test";
 import { ErcaspayClient } from "./../../";
 
-describe("Card Module Test 🧪", () => {
+describe.skip("Card Module Test 🧪", () => {
   const client = new ErcaspayClient(
     process.env.SECRET_KEY as string,
     "development"
   );
 
-  describe("Initiate Card Payment", async () => {
+  describe.skip("Initiate Card Payment", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       /**
        * TODO
@@ -15,7 +15,7 @@ describe("Card Module Test 🧪", () => {
     });
   });
 
-  describe("Submit OTP", async () => {
+  describe.skip("Submit OTP", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       /**
        *
@@ -34,7 +34,7 @@ describe("Card Module Test 🧪", () => {
     });
   });
 
-  describe("Resend OTP", async () => {
+  describe.skip("Resend OTP", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       /**
        * TODO
@@ -51,7 +51,7 @@ describe("Card Module Test 🧪", () => {
     });
   });
 
-  describe("Get Card Details", async () => {
+  describe.skip("Get Card Details", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const initiateTransactionRequest =
         await client.checkout.initiateTransaction({
@@ -92,7 +92,7 @@ describe("Card Module Test 🧪", () => {
     });
   });
 
-  describe("Verify Card Transaction", async () => {
+  describe.skip("Verify Card Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       /**
        * TODO

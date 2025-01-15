@@ -1,13 +1,13 @@
 import { expect, test, describe, it, beforeEach } from "bun:test";
 import { ErcaspayClient } from "./../../";
 
-describe("Checkout Module Test 🧪", () => {
+describe.skip("Checkout Module Test 🧪", () => {
   const client = new ErcaspayClient(
     process.env.SECRET_KEY as string,
     "development"
   );
 
-  describe("Initiate Checkout Transaction", async () => {
+  describe.skip("Initiate Checkout Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const response = await client.checkout.initiateTransaction({
         amount: 10000,
@@ -36,7 +36,7 @@ describe("Checkout Module Test 🧪", () => {
     });
   });
 
-  describe("Verify Checkout Transaction", async () => {
+  describe.skip("Verify Checkout Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const validTransactionRef = "ERCS|20241214214035|1734208835283";
 

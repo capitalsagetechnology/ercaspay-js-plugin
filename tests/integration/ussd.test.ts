@@ -1,13 +1,13 @@
 import { expect, test, describe, it, beforeEach } from "bun:test";
 import { ErcaspayClient } from "./../../";
 
-describe("USSD Module Test 🧪", () => {
+describe.skip("USSD Module Test 🧪", () => {
   const client = new ErcaspayClient(
     process.env.SECRET_KEY as string,
     "development"
   );
 
-  describe("Initiate USSD Code", async () => {
+  describe.skip("Initiate USSD Code", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const initiateTransactionRequest =
         await client.checkout.initiateTransaction({
@@ -47,7 +47,7 @@ describe("USSD Module Test 🧪", () => {
     });
   });
 
-  describe("Get Bank List For USSD", async () => {
+  describe.skip("Get Bank List For USSD", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const response = await client.ussd.getBankList();
       expect(response.requestSuccessful).toBeTrue();

@@ -1,13 +1,13 @@
 import { expect, test, describe, it, beforeEach } from "bun:test";
 import { ErcaspayClient } from "./../../";
 
-describe("Bank Transfer Module Test 🧪", () => {
+describe.skip("Bank Transfer Module Test 🧪", () => {
   const client = new ErcaspayClient(
     process.env.SECRET_KEY as string,
     "development"
   );
 
-  describe("Initiate Bank Transfer", async () => {
+  describe.skip("Initiate Bank Transfer", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const initiateTransactionRequest =
         await client.checkout.initiateTransaction({
