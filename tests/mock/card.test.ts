@@ -71,7 +71,7 @@ class MockErcaspayClient {
                 responseBody: {
                     currency: this.MOCK_DATA.currency,
                     amount: this.MOCK_DATA.amount,
-                    reference: this.MOCK_DATA.transactionReference,
+                    reference: "mock-reference",
                     status: "successful",
                 },
             };
