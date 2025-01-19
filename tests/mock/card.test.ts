@@ -2,21 +2,47 @@ import { expect, test, describe, it } from "bun:test";
 
 // Mock ErcaspayClient
 class MockErcaspayClient {
+    private validateTransactionRef(ref: string) {
+        if (ref === "invalid-transaction-reference") {
+            throw new Error("Invalid transaction reference");
+        }
+    }
+
+    private validateOTP(otp: string) {
+        if (!/^\d{6}$/.test(otp)) {
+            throw new Error("Invalid OTP format");
+        }
+    }
+
+    private async simulateDelay() {
+        await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
+    }
+
+    private readonly MOCK_DATA = {
+        transactionReference: "mock-transaction-ref",
+        paymentReference: "mock-payment-ref",
+        amount: 10000,
+        currency: "NGN",
+        status: "initiated",
+        successMessage: "Operation successful",
+    };
+
     card = {
-        initiatePayment: async () => ({
-            requestSuccessful: true,
-            responseBody: {
-                transactionReference: "mock-transaction-ref",
-                paymentReference: "mock-payment-ref",
-                amount: 10000,
-                currency: "NGN",
-                status: "initiated",
-            },
-        }),
+        initiatePayment: async () => {
+            await this.simulateDelay();
+            return {
+                requestSuccessful: true,
+                responseBody: {
+                    ...this.MOCK_DATA,
+                    status: this.MOCK_DATA.status,
+                },
+            };
+        },
+
         submitOTP: async (data: { transactionReference: string; otp: string }) => {
-            if (data.transactionReference === "invalid-transaction-reference") {
-                throw new Error("Invalid transaction reference");
-            }
+            await this.simulateDelay();
+            this.validateTransactionRef(data.transactionReference);
+            this.validateOTP(data.otp);
             return {
                 requestSuccessful: true,
                 responseBody: {
@@ -25,10 +51,10 @@ class MockErcaspayClient {
                 },
             };
         },
+
         resendOTP: async (data: { transactionReference: string }) => {
-            if (data.transactionReference === "invalid-transaction-reference") {
-                throw new Error("Invalid transaction reference");
-            }
+            await this.simulateDelay();
+            this.validateTransactionRef(data.transactionReference);
             return {
                 requestSuccessful: true,
                 responseBody: {
@@ -36,24 +62,24 @@ class MockErcaspayClient {
                 },
             };
         },
+
         getDetails: async (transactionReference: string) => {
-            if (transactionReference === "invalid-transaction-reference") {
-                throw new Error("Invalid transaction reference");
-            }
+            await this.simulateDelay();
+            this.validateTransactionRef(transactionReference);
             return {
                 requestSuccessful: true,
                 responseBody: {
-                    currency: "NGN",
-                    amount: 10000,
-                    reference: "mock-reference",
+                    currency: this.MOCK_DATA.currency,
+                    amount: this.MOCK_DATA.amount,
+                    reference: this.MOCK_DATA.transactionReference,
                     status: "successful",
                 },
             };
         },
+
         verifyTransaction: async (transactionReference: string) => {
-            if (transactionReference === "invalid-transaction-reference") {
-                throw new Error("Invalid transaction reference");
-            }
+            await this.simulateDelay();
+            this.validateTransactionRef(transactionReference);
             return {
                 requestSuccessful: true,
                 responseBody: {
