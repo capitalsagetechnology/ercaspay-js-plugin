@@ -11,17 +11,28 @@ class MockErcaspayClient {
         }),
     };
 
+
     bankTransfer = {
-        initializeTransfer: async (transactionRef: string) => ({
-            requestSuccessful: true,
-            responseBody: {
-                ref: transactionRef, // to be removed
-                status: "initialized",
-                amount: 10000,
-                bankName: "Mock Bank",
-            },
-        }),
+        initializeTransfer: async (transactionRef: string) => {
+            if (!transactionRef || transactionRef === "invalid-ref") {
+                return {
+                    requestSuccessful: false,
+                    responseBody: {
+                        error: "Invalid transaction reference"
+                    }
+                };
+            }
+            return {
+                requestSuccessful: true,
+                responseBody: {
+                    status: "initialized",
+                    amount: 10000,
+                    bankName: "Mock Bank",
+                },
+            };
+        },
     };
+
 }
 
 describe("Bank Transfer Module Test 🧪", () => {
