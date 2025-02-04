@@ -1,6 +1,6 @@
 ![](assets/header.png)
 
-**Ercaspay JavaScript SDK**. Built with ❣️ by Team Godspeed
+**@capitalsage/ercaspay-sdk**. Built with ❣️ by Team Godspeed
 
 [View our Presentation Slides](https://docs.google.com/presentation/d/1sULf_oTw_Na7RITZjlCxObEcCLXYJHUkC7uZQ2Amixg/edit#slide=id.g31fdb22fe15_0_6)
 
