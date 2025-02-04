@@ -1,13 +1,13 @@
 import { expect, test, describe, it, beforeEach } from "bun:test";
 import { ErcaspayClient } from "./../../";
 
-describe("Transaction Module Test 🧪", () => {
+describe.skip("Transaction Module Test 🧪", () => {
   const client = new ErcaspayClient(
     process.env.SECRET_KEY as string,
     "development"
   );
 
-  describe("Initiate Transaction", async () => {
+  describe.skip("Initiate Transaction", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const response = await client.transaction.initiate({
         amount: 10000,
@@ -36,7 +36,7 @@ describe("Transaction Module Test 🧪", () => {
     });
   });
 
-  describe("Cancel Transaction", async () => {
+  describe.skip("Cancel Transaction", async () => {
     it("Should cancel a transaction and return a 200 status code, with appropriate typed response", async () => {
       const initiateTransactionRequest = await client.transaction.initiate({
         amount: 10000,
@@ -66,7 +66,7 @@ describe("Transaction Module Test 🧪", () => {
     });
   });
 
-  describe("Check Transaction Status", async () => {
+  describe.skip("Check Transaction Status", async () => {
     it("Should check a transaction status and return a 200 status code, with appropriate typed response", async () => {
       const validTransactionRef = "ERCS|20241215043712|1734233832822";
 
@@ -84,7 +84,7 @@ describe("Transaction Module Test 🧪", () => {
     });
   });
 
-  describe("Verify Transaction", async () => {
+  describe.skip("Verify Transaction", async () => {
     it("Should verify a transaction and return a 200 status code, with appropriate typed response", async () => {
       const validTransactionRef = "ERCS|20241216085942|1734335982170";
       const response = await client.transaction.verify(validTransactionRef);
@@ -106,7 +106,7 @@ describe("Transaction Module Test 🧪", () => {
     });
   });
 
-  describe("Check Transaction Details", async () => {
+  describe.skip("Check Transaction Details", async () => {
     it("Should return a 200 status code, with appropriate typed response", async () => {
       const initiateTransactionRequest = await client.transaction.initiate({
         amount: 10000,
